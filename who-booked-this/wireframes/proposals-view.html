@@ -1,0 +1,151 @@
+<style>
+.device{width:320px;margin:0 auto;background:var(--color-background-secondary);border-radius:32px;padding:12px;border:0.5px solid var(--color-border-secondary)}
+.screen{background:var(--color-background-primary);border-radius:24px;overflow:hidden;min-height:620px}
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 4px;font-size:11px;color:var(--color-text-tertiary)}
+.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 10px}
+.nav-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.nav-sub{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
+.filter-row{display:flex;gap:6px;padding:0 14px 10px;overflow:hidden}
+.filter-pill{font-size:11px;padding:4px 12px;border-radius:16px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-secondary);white-space:nowrap;cursor:pointer}
+.filter-pill.active{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}
+.prop-card{margin:0 14px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:10px 12px;background:var(--color-background-primary);cursor:pointer}
+.prop-card:hover{border-color:var(--color-border-secondary)}
+.prop-top{display:flex;gap:10px;align-items:flex-start}
+.vote-col{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:28px}
+.vote-up{width:24px;height:24px;border-radius:6px;border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;background:var(--color-background-secondary)}
+.vote-up.voted{background:#EEEDFE;border-color:#AFA9EC}
+.vote-count{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.prop-body{flex:1}
+.prop-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+.prop-meta{font-size:11px;color:var(--color-text-secondary);margin:0 0 6px}
+.prop-footer{display:flex;align-items:center;justify-content:space-between;margin-top:6px}
+.prop-day{font-size:11px;padding:2px 7px;border-radius:8px;background:#E6F1FB;color:#0C447C}
+.promote-btn{font-size:11px;padding:4px 10px;border-radius:8px;background:#534AB7;color:#EEEDFE;border:none;cursor:pointer}
+.promote-btn.subtle{background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
+.prop-comment-count{font-size:11px;color:var(--color-text-tertiary);display:flex;align-items:center;gap:3px}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:4px 14px 10px}
+.signal-note{margin:0 14px 10px;padding:8px 12px;background:#F1EFE8;border-radius:10px;font-size:11px;color:#5F5E5A;line-height:1.5}
+.fab{display:flex;justify-content:flex-end;padding:8px 14px 12px}
+.fab-btn{background:#534AB7;color:#EEEDFE;border:none;border-radius:20px;padding:8px 16px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px;cursor:pointer}
+</style>
+
+<div class="device">
+  <div class="screen">
+    <div class="status-bar"><span>9:41</span><div style="display:flex;gap:4px"><i class="ti ti-wifi" style="font-size:13px"></i><i class="ti ti-battery-2" style="font-size:13px"></i></div></div>
+
+    <div class="nav-bar">
+      <div>
+        <div class="nav-title">Proposals</div>
+        <div class="nav-sub">Yellowstone Trip · 5 open</div>
+      </div>
+    </div>
+
+    <div class="filter-row">
+      <div class="filter-pill active">All</div>
+      <div class="filter-pill">Jun 15</div>
+      <div class="filter-pill">Jun 16</div>
+      <div class="filter-pill">Jun 17</div>
+      <div class="filter-pill">No date</div>
+    </div>
+
+    <div class="signal-note">Votes are a signal, not a gate. Anyone can promote a proposal to Active at any time.</div>
+
+    <!-- Proposal 1 - high votes -->
+    <div class="prop-card" onclick="sendPrompt('Show me the item detail for Evening Boat Tour proposal')">
+      <div class="prop-top">
+        <div class="vote-col">
+          <div class="vote-up voted">▲</div>
+          <div class="vote-count">6</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-title">Evening boat tour</div>
+          <div class="prop-meta">Proposed by Aunt Rita · Jun 6</div>
+          <div class="prop-footer">
+            <span class="prop-day">Jun 15</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="prop-comment-count"><i class="ti ti-message" style="font-size:11px"></i> 3</span>
+              <button class="promote-btn" onclick="event.stopPropagation();sendPrompt('What happens when I promote a proposal to Active in Who Booked This?')">Make it a plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposal 2 - medium votes -->
+    <div class="prop-card" onclick="sendPrompt('Show me the item detail for Hot Springs Hike proposal')">
+      <div class="prop-top">
+        <div class="vote-col">
+          <div class="vote-up">▲</div>
+          <div class="vote-count">4</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-title">Hot springs hike — morning</div>
+          <div class="prop-meta">Proposed by Uncle Dave · Jun 7</div>
+          <div class="prop-footer">
+            <span class="prop-day">Jun 16</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="prop-comment-count"><i class="ti ti-message" style="font-size:11px"></i> 1</span>
+              <button class="promote-btn" onclick="event.stopPropagation()">Make it a plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposal 3 - low votes, contested -->
+    <div class="prop-card" onclick="sendPrompt('What happens with a contested proposal in Who Booked This?')">
+      <div class="prop-top">
+        <div class="vote-col">
+          <div class="vote-up">▲</div>
+          <div class="vote-count">1</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-title">Winery tour — afternoon</div>
+          <div class="prop-meta">Proposed by Dad · Jun 8</div>
+          <div class="prop-footer">
+            <span class="prop-day">Jun 17</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="prop-comment-count"><i class="ti ti-message" style="font-size:11px"></i> 5</span>
+              <button class="promote-btn subtle" onclick="event.stopPropagation()">Make it a plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Proposal 4 - no date -->
+    <div class="prop-card">
+      <div class="prop-top">
+        <div class="vote-col">
+          <div class="vote-up">▲</div>
+          <div class="vote-count">2</div>
+        </div>
+        <div class="prop-body">
+          <div class="prop-title">Group photo at canyon rim</div>
+          <div class="prop-meta">Proposed by Grandma · Jun 9</div>
+          <div class="prop-footer">
+            <span class="prop-day" style="background:#F1EFE8;color:#5F5E5A">No date yet</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span class="prop-comment-count"><i class="ti ti-message" style="font-size:11px"></i> 0</span>
+              <button class="promote-btn" onclick="event.stopPropagation()">Make it a plan</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fab">
+      <button class="fab-btn" onclick="sendPrompt('Show me the Add Proposal screen for Who Booked This?')">
+        <i class="ti ti-plus"></i> Add proposal
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:1.5rem 0 0;font-size:11px;color:var(--color-text-secondary)">
+  <div style="border-left:3px solid #534AB7;padding-left:8px">The signal note at the top is permanent — it explains the system's rules once, in context, where it matters.</div>
+  <div style="border-left:3px solid #1D9E75;padding-left:8px">"Make it a plan" is available on every card regardless of vote count. The button is subtler on low-voted items but never disabled.</div>
+  <div style="border-left:3px solid #AFA9EC;padding-left:8px">Comment count on each card — heated discussion (5 comments, 1 vote) is a signal worth seeing before promoting.</div>
+  <div style="border-left:3px solid #EF9F27;padding-left:8px">No-date proposals stay visible. They don't disappear just because no one assigned them a day yet.</div>
+</div>

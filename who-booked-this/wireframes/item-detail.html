@@ -1,0 +1,133 @@
+<style>
+.device{width:320px;margin:0 auto;background:var(--color-background-secondary);border-radius:32px;padding:12px;border:0.5px solid var(--color-border-secondary)}
+.screen{background:var(--color-background-primary);border-radius:24px;overflow:hidden;min-height:620px}
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 4px;font-size:11px;color:var(--color-text-tertiary)}
+.nav-bar{display:flex;align-items:center;gap:10px;padding:6px 14px 10px}
+.nav-back{font-size:13px;color:#534AB7;display:flex;align-items:center;gap:3px}
+.nav-title{font-size:15px;font-weight:500;color:var(--color-text-primary);flex:1}
+.nav-edit{font-size:13px;color:#534AB7}
+.item-hero{padding:12px 14px 10px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.item-name{font-size:18px;font-weight:600;color:var(--color-text-primary);margin:0 0 4px}
+.item-when{font-size:13px;color:var(--color-text-secondary);margin:0 0 10px}
+.badge-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.badge{font-size:11px;padding:3px 9px;border-radius:10px}
+.b-active{background:#E1F5EE;color:#085041}
+.b-committed{background:#E1F5EE;color:#085041;font-weight:600}
+.b-day{background:#E6F1FB;color:#0C447C}
+.section{padding:10px 14px 0}
+.section-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.04em;text-transform:uppercase;margin:0 0 8px}
+.commit-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.commit-person{display:flex;align-items:center;gap:8px}
+.avatar{width:24px;height:24px;border-radius:50%;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:var(--color-text-secondary);flex-shrink:0}
+.commit-name{font-size:12px;color:var(--color-text-primary)}
+.commit-date{font-size:11px;color:var(--color-text-tertiary)}
+.commit-btn{font-size:11px;padding:4px 10px;border-radius:8px;background:#EEEDFE;color:#3C3489;border:none;cursor:pointer}
+.commit-btn.active-commit{background:#E1F5EE;color:#085041}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:10px 14px}
+.comment-row{display:flex;gap:8px;margin-bottom:8px}
+.comment-body{flex:1}
+.comment-author{font-size:11px;font-weight:500;color:var(--color-text-primary)}
+.comment-text{font-size:12px;color:var(--color-text-secondary);margin-top:1px;line-height:1.5}
+.comment-time{font-size:10px;color:var(--color-text-tertiary);margin-top:2px}
+.comment-input{display:flex;gap:8px;align-items:center;padding:8px 14px;border-top:0.5px solid var(--color-border-tertiary);margin-top:4px}
+.input-box{flex:1;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:16px;padding:6px 12px;font-size:12px;color:var(--color-text-secondary)}
+.send-btn{width:28px;height:28px;border-radius:50%;background:#534AB7;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer}
+.audit-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:6px}
+.audit-dot{width:6px;height:6px;border-radius:50%;background:#AFA9EC;margin-top:5px;flex-shrink:0}
+.audit-text{font-size:11px;color:var(--color-text-secondary);line-height:1.5}
+.audit-link{font-size:11px;color:#534AB7;padding:4px 0;display:block}
+.state-actions{display:flex;gap:6px;padding:8px 14px;border-top:0.5px solid var(--color-border-tertiary)}
+.action-btn{flex:1;padding:7px 0;border-radius:8px;font-size:12px;font-weight:500;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;text-align:center}
+.action-btn.primary{background:#534AB7;color:#EEEDFE;border-color:#534AB7}
+.action-btn.danger{color:#C0392B;border-color:#F5C6C2}
+</style>
+
+<h2 style="position:absolute;width:1px;height:1px;overflow:hidden">Wireframe: Item detail screen</h2>
+
+<div class="device">
+  <div class="screen">
+    <div class="status-bar"><span>9:41</span><div style="display:flex;gap:4px"><i class="ti ti-wifi" style="font-size:13px"></i><i class="ti ti-battery-2" style="font-size:13px"></i></div></div>
+
+    <div class="nav-bar">
+      <span class="nav-back"><i class="ti ti-chevron-left"></i> Sun 15</span>
+      <span class="nav-title"></span>
+      <span class="nav-edit">Edit</span>
+    </div>
+
+    <div class="item-hero">
+      <div class="item-name">Old Faithful — 10:30am</div>
+      <div class="item-when">Sunday, Jun 15 · Meet at visitor center</div>
+      <div class="badge-row">
+        <span class="badge b-active">Active</span>
+        <span class="badge b-day">Day 2</span>
+        <span class="badge" style="background:#F1EFE8;color:#5F5E5A;font-size:11px">Added by Mom · Jun 2</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Committed (3)</div>
+      <div class="commit-row">
+        <div class="commit-person"><div class="avatar">M</div><div><div class="commit-name">Mom</div><div class="commit-date">Booked Jun 3</div></div></div>
+        <span class="badge b-committed">✓ Committed</span>
+      </div>
+      <div class="commit-row">
+        <div class="commit-person"><div class="avatar">D</div><div><div class="commit-name">Dad</div><div class="commit-date">Booked Jun 3</div></div></div>
+        <span class="badge b-committed">✓ Committed</span>
+      </div>
+      <div class="commit-row">
+        <div class="commit-person"><div class="avatar">R</div><div><div class="commit-name">Aunt Rita</div><div class="commit-date">Booked Jun 5</div></div></div>
+        <span class="badge b-committed">✓ Committed</span>
+      </div>
+      <button class="commit-btn" style="margin-top:4px;margin-bottom:4px" onclick="sendPrompt('What happens when I tap I booked this in Who Booked This?')">+ I booked this</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Comments (2)</div>
+      <div class="comment-row">
+        <div class="avatar">R</div>
+        <div class="comment-body">
+          <div class="comment-author">Aunt Rita</div>
+          <div class="comment-text">Parking fills up fast — should we leave by 9:45?</div>
+          <div class="comment-time">Jun 8 · 2:14pm</div>
+        </div>
+      </div>
+      <div class="comment-row">
+        <div class="avatar">M</div>
+        <div class="comment-body">
+          <div class="comment-author">Mom</div>
+          <div class="comment-text">Good call. I'll update the meet time.</div>
+          <div class="comment-time">Jun 8 · 2:31pm</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="comment-input">
+      <div class="input-box">Add a comment…</div>
+      <button class="send-btn"><i class="ti ti-send" style="font-size:13px;color:#EEEDFE"></i></button>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section">
+      <div class="section-label">Recent changes</div>
+      <div class="audit-row"><div class="audit-dot"></div><div class="audit-text"><strong>Mom</strong> changed meet time from 10:00am to 10:30am · Jun 8</div></div>
+      <div class="audit-row"><div class="audit-dot"></div><div class="audit-text"><strong>Mom</strong> promoted to Active · Jun 2</div></div>
+      <a class="audit-link" onclick="sendPrompt('Show me the full audit trail screen for Who Booked This?')">View full history →</a>
+    </div>
+
+    <div class="state-actions">
+      <button class="action-btn" onclick="sendPrompt('What does reverting an item to proposed do in Who Booked This?')">Revert to proposed</button>
+      <button class="action-btn danger" onclick="sendPrompt('What happens when you archive an item in Who Booked This?')">Archive</button>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:1.5rem 0 0;font-size:11px;color:var(--color-text-secondary)">
+  <div style="border-left:3px solid #1D9E75;padding-left:8px">"I booked this" is a single tap — low friction is intentional. No form, no confirmation screen.</div>
+  <div style="border-left:3px solid #534AB7;padding-left:8px">Comments are per-item. The discussion about parking time stays attached to Old Faithful, not lost in the trip thread.</div>
+  <div style="border-left:3px solid #AFA9EC;padding-left:8px">Audit trail shows recent changes inline. Full history is one tap away but not the default view.</div>
+  <div style="border-left:3px solid #C0392B;padding-left:8px">Archive is available but visually de-emphasized. Deletes are slow — you have to mean it.</div>
+</div>

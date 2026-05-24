@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heirloom — Wireframe: Photo Capture Import</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #F5F0E8;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+  }
+
+  .page-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #9A8F7F;
+    margin-bottom: 24px;
+  }
+
+  .device {
+    width: 320px;
+    background: #E8E0D4;
+    border-radius: 44px;
+    padding: 12px;
+    border: 0.5px solid #C8BFB0;
+    box-shadow: 0 8px 32px rgba(80,60,40,0.12);
+  }
+
+  .screen {
+    background: #1A1410;
+    border-radius: 34px;
+    overflow: hidden;
+    min-height: 640px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px 4px;
+    font-size: 11px;
+    color: #9A8F7F;
+  }
+
+  .camera-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px 12px;
+  }
+
+  .cancel-btn {
+    font-size: 13px;
+    color: #F5F0E8;
+    opacity: .7;
+  }
+
+  .camera-title {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #F5F0E8;
+  }
+
+  .flash-btn {
+    font-size: 20px;
+    color: #F5F0E8;
+    opacity: .7;
+  }
+
+  /* Viewfinder */
+  .viewfinder {
+    margin: 0 14px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: #2A2018;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .viewfinder-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* Simulated recipe card in viewfinder */
+  .recipe-card-sim {
+    width: 200px;
+    background: #F5F0E0;
+    border-radius: 4px;
+    padding: 14px;
+    transform: rotate(-1.5deg);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  .rcs-title {
+    font-family: 'Lora', serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #3D2B1F;
+    margin-bottom: 6px;
+    border-bottom: 0.5px solid #C8BFB0;
+    padding-bottom: 4px;
+  }
+
+  .rcs-line {
+    height: 5px;
+    background: #C8BFB0;
+    border-radius: 2px;
+    margin-bottom: 4px;
+  }
+
+  /* Corner guides */
+  .corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-color: #C9523A;
+    border-style: solid;
+    opacity: .8;
+  }
+
+  .corner-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; border-radius: 3px 0 0 0; }
+  .corner-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; border-radius: 0 3px 0 0; }
+  .corner-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; border-radius: 0 0 0 3px; }
+  .corner-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; border-radius: 0 0 3px 0; }
+
+  /* Scan line */
+  .scan-line {
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, #C9523A, transparent);
+    top: 40%;
+    opacity: .6;
+  }
+
+  /* Tip */
+  .camera-tip {
+    margin: 12px 14px 8px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    font-size: 12px;
+    color: #D4C9BA;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* Parsing status */
+  .parsing-status {
+    margin: 0 14px 12px;
+    padding: 10px 14px;
+    background: rgba(201,82,58,0.15);
+    border: 0.5px solid rgba(201,82,58,0.3);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .parsing-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #C9523A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: white;
+  }
+
+  .parsing-text { flex: 1; }
+  .parsing-title { font-size: 12px; font-weight: 500; color: #F5C4BB; margin-bottom: 2px; }
+  .parsing-sub { font-size: 11px; color: #9A8F7F; }
+
+  /* Controls */
+  .camera-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 12px 20px 20px;
+    margin-top: auto;
+  }
+
+  .gallery-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #2A2018;
+    border: 0.5px solid #3D3020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #D4C9BA;
+  }
+
+  .shutter {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #F5F0E8;
+    border: 4px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 0 0 2px #C9523A;
+  }
+
+  .shutter-inner {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #F5F0E8;
+  }
+
+  .flip-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #2A2018;
+    border: 0.5px solid #3D3020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: #D4C9BA;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-label">Heirloom · Wireframe 3 of 5 · Photo Capture Import</div>
+
+<div class="device">
+  <div class="screen">
+    <div class="status-bar" style="color:#9A8F7F">
+      <span style="color:#D4C9BA">9:41</span>
+      <div style="display:flex;gap:4px;color:#D4C9BA">
+        <i class="ti ti-wifi" style="font-size:13px"></i>
+        <i class="ti ti-battery-2" style="font-size:13px"></i>
+      </div>
+    </div>
+
+    <div class="camera-header">
+      <span class="cancel-btn">Cancel</span>
+      <span class="camera-title">Rescue a recipe</span>
+      <i class="ti ti-bolt" style="font-size:20px;color:#F5F0E8;opacity:.7"></i>
+    </div>
+
+    <div class="viewfinder">
+      <div class="viewfinder-content">
+        <div class="recipe-card-sim">
+          <div class="rcs-title">Grandma's Pecan Pie</div>
+          <div class="rcs-line" style="width:90%"></div>
+          <div class="rcs-line" style="width:70%"></div>
+          <div class="rcs-line" style="width:80%"></div>
+          <div class="rcs-line" style="width:60%;margin-top:6px"></div>
+          <div class="rcs-line" style="width:85%"></div>
+          <div class="rcs-line" style="width:75%"></div>
+        </div>
+        <div class="corner corner-tl"></div>
+        <div class="corner corner-tr"></div>
+        <div class="corner corner-bl"></div>
+        <div class="corner corner-br"></div>
+        <div class="scan-line"></div>
+      </div>
+    </div>
+
+    <div class="camera-tip">
+      Lay the card flat in good light.<br>The whole recipe should be in frame.
+    </div>
+
+    <div class="parsing-status">
+      <div class="parsing-icon">
+        <i class="ti ti-check" style="font-size:14px"></i>
+      </div>
+      <div class="parsing-text">
+        <div class="parsing-title">Last import: Chantilly Cake</div>
+        <div class="parsing-sub">Parsed successfully · no corrections needed</div>
+      </div>
+    </div>
+
+    <div class="camera-controls">
+      <div class="gallery-btn">
+        <i class="ti ti-photo"></i>
+      </div>
+      <div class="shutter">
+        <div class="shutter-inner"></div>
+      </div>
+      <div class="flip-btn">
+        <i class="ti ti-camera-rotate"></i>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:24px 0 0;max-width:320px;font-size:11px;color:#7A6A5A">
+  <div style="border-left:3px solid #C9523A;padding-left:8px;line-height:1.5">The screen is called "Rescue a recipe" — not "Scan" or "Import." Language reinforces the emotional frame of the product from the first interaction.</div>
+  <div style="border-left:3px solid #9A8F7F;padding-left:8px;line-height:1.5">Corner guides and a scan line signal active parsing — like checking a check in a banking app. The app is doing work; the user is just aiming.</div>
+  <div style="border-left:3px solid #B0A090;padding-left:8px;line-height:1.5">Last import status is visible at the bottom. The keeper of cards imports one at a time — knowing the previous one succeeded encourages continuing.</div>
+  <div style="border-left:3px solid #D4C9BA;padding-left:8px;line-height:1.5">Gallery access is available for recipe cards already photographed. Import path is camera-first but not camera-only.</div>
+</div>
+
+</body>
+</html>

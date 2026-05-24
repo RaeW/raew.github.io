@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heirloom — Product Requirements Document</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1C1B19;
+    --ink-mid: #4A4840;
+    --ink-light: #8A8780;
+    --ink-faint: #C8C5BE;
+    --paper: #FAF8F4;
+    --paper-warm: #F2EFE8;
+    --paper-warmer: #E8E3D8;
+    --accent: #3C3489;
+    --accent-mid: #7F77DD;
+    --accent-light: #EEEDFE;
+    --green: #085041;
+    --green-light: #E1F5EE;
+    --amber: #633806;
+    --amber-light: #FAEEDA;
+    --rule: rgba(28,27,25,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 64px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .header-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    max-width: 560px;
+    margin-bottom: 28px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .meta-value {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-mid);
+  }
+
+  /* Sections */
+  section {
+    margin-bottom: 56px;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Lora', serif;
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+
+  h3 {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink);
+    margin: 32px 0 10px;
+  }
+
+  h4 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin: 24px 0 8px;
+  }
+
+  p {
+    color: var(--ink-mid);
+    margin-bottom: 14px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* Pullquote */
+  .pullquote {
+    margin: 32px 0;
+    padding: 0 0 0 24px;
+    border-left: 2px solid var(--accent-mid);
+  }
+
+  .pullquote p {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+
+  /* User cards */
+  .user-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  @media (max-width: 540px) {
+    .user-grid { grid-template-columns: 1fr; }
+  }
+
+  .user-card {
+    background: var(--paper-warm);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+
+  .user-card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .user-card-desc {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+
+  .user-card-import {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 4px;
+  }
+
+  .user-card-import-detail {
+    font-size: 12px;
+    color: var(--ink-mid);
+    line-height: 1.5;
+  }
+
+  /* Goal list */
+  .goal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .goal-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 12px 16px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+  }
+
+  .goal-metric {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 48px;
+    flex-shrink: 0;
+    padding-top: 1px;
+  }
+
+  .goal-desc {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+  }
+
+  /* Feature blocks */
+  .feature-block {
+    margin: 28px 0;
+    padding: 22px 26px;
+    background: var(--paper-warm);
+    border-radius: 10px;
+  }
+
+  .feature-block-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--paper-warmer);
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .feature-list li {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .feature-list li::before {
+    content: '·';
+    position: absolute;
+    left: 4px;
+    color: var(--ink-faint);
+  }
+
+  .feature-list li.sub {
+    padding-left: 28px;
+    color: var(--ink-light);
+    font-size: 12px;
+  }
+
+  .feature-list li.sub::before {
+    content: '—';
+    left: 14px;
+    font-size: 10px;
+  }
+
+  /* Open question / note boxes */
+  .note-box {
+    margin: 20px 0;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .note-box.open {
+    background: var(--amber-light);
+    border-left: 3px solid #EF9F27;
+  }
+
+  .note-box.open p { color: var(--amber); margin: 0; }
+
+  .note-box.principle {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent-mid);
+  }
+
+  .note-box.principle p { color: var(--accent); margin: 0; }
+
+  .note-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-box.open .note-label { color: var(--amber); }
+  .note-box.principle .note-label { color: var(--accent); }
+
+  /* Two-col grid for edge cases / out of scope */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 540px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  .two-col-item {
+    padding: 12px 14px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+  }
+
+  /* Re-engagement highlight */
+  .re-engagement {
+    margin: 28px 0;
+    padding: 22px 26px;
+    background: var(--green-light);
+    border-radius: 10px;
+    border-left: 3px solid var(--green);
+  }
+
+  .re-engagement-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+
+  .re-engagement p {
+    font-size: 13px;
+    color: var(--green);
+    line-height: 1.6;
+    margin-bottom: 8px;
+  }
+
+  .re-engagement p:last-child { margin-bottom: 0; }
+
+  /* Footer */
+  .footer-rule {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 48px 20px 80px; }
+    section { margin-bottom: 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-eyebrow">Product Requirements Document</div>
+    <h1>Heirloom</h1>
+    <p class="header-sub">A mobile app that rescues your stranded recipes — bringing them to your phone and surfacing them when you're ready to cook.</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Version</span>
+        <span class="meta-value">1.1</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value">May 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Platform</span>
+        <span class="meta-value">Mobile (iOS-first)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value">In development</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Overview -->
+  <section>
+    <div class="section-eyebrow">01 — Overview</div>
+    <h2>The problem this solves</h2>
+    <p>I have a Whole Foods Chantilly cake recipe saved on my computer, with my own notes on it. I've never made it again. By the time I'm in the kitchen with my phone, finding that file is more friction than just searching online — and the version I find isn't the same. The barrier to cooking with my good recipes is sufficiently high that I choose YouTube instead, simply for convenience.</p>
+
+    <div class="pullquote">
+      <p>The recipes aren't gone. They're stranded. Heirloom brings them home.</p>
+    </div>
+
+    <p>The problem isn't storage format. It's that the friction of retrieval broke the habit of returning to recipes people already love. Heirloom solves two things: it rescues existing recipes from wherever they're living, and it surfaces them at the moment you're ready to cook — by ingredient, by what's about to go bad, by what you haven't made in a while.</p>
+  </section>
+
+  <!-- Users -->
+  <section>
+    <div class="section-eyebrow">02 — Users</div>
+    <h2>Two people with the same problem, different recipes</h2>
+    <p>Both primary users have a collection of recipes they love but rarely cook from, because retrieving them is more friction than just finding something online. Their recipes are stranded in different places — but the failure mode is identical.</p>
+
+    <div class="user-grid">
+      <div class="user-card">
+        <div class="user-card-name">The digital archivist</div>
+        <div class="user-card-desc">Has years of recipes saved as PDFs, Word docs, and text files — on a desktop, in a downloads folder, maybe in email attachments. Technically comfortable. The barrier is steps, not skill: getting the file from computer to kitchen requires too many of them.</div>
+        <div class="user-card-import">Primary import path</div>
+        <div class="user-card-import-detail">Bulk file upload from a folder. Wants to bring everything in at once and sort it out from there.</div>
+      </div>
+      <div class="user-card">
+        <div class="user-card-name">The keeper of cards</div>
+        <div class="user-card-desc">Has a shoebox or binder of recipe cards — some in their own handwriting, some in a parent's or grandparent's. Deeply attached to them. The barrier is physical: the cards live in a drawer, not in the kitchen, and finding the right one takes digging.</div>
+        <div class="user-card-import">Primary import path</div>
+        <div class="user-card-import-detail">Photo capture, one recipe at a time. Each import is a small act of preservation, not a bulk transfer.</div>
+      </div>
+    </div>
+
+    <div class="note-box principle" style="margin-top: 20px;">
+      <div class="note-label">Design constraint</div>
+      <p>This app is built for people who already know how to use their recipes. It doesn't teach cooking. It removes the friction between a good recipe and the moment someone is ready to make it.</p>
+    </div>
+  </section>
+
+  <!-- Goals -->
+  <section>
+    <div class="section-eyebrow">03 — Goals</div>
+    <h2>What success looks like</h2>
+    <p>Standard engagement metrics — session length, daily actives — aren't the right measure here. The job is re-engagement: people cooking from recipes they already love but stopped reaching for. These metrics measure that.</p>
+
+    <div class="goal-list">
+      <div class="goal-row">
+        <div class="goal-metric">&lt; 20%</div>
+        <div class="goal-desc">of recipe imports require manual correction. Parsing should handle the common cases; manual correction is the exception.</div>
+      </div>
+      <div class="goal-row">
+        <div class="goal-metric">90%</div>
+        <div class="goal-desc">of users return to import more recipes after their first correction experience. The correction flow must feel fast and forgiving, not punishing.</div>
+      </div>
+      <div class="goal-row">
+        <div class="goal-metric">10+</div>
+        <div class="goal-desc">recipes imported by the average user in their first month. A library too small to search from is a library that won't be used.</div>
+      </div>
+      <div class="goal-row">
+        <div class="goal-metric">≥ 90%</div>
+        <div class="goal-desc">parsing confidence considered a successful import. Below this threshold, recipes are flagged for review.</div>
+      </div>
+      <div class="goal-row">
+        <div class="goal-metric">Cooked</div>
+        <div class="goal-desc">At least one recipe is prepared and photographed from within the app. This is the moment the product actually worked.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Non-Goals -->
+  <section>
+    <div class="section-eyebrow">04 — Non-Goals</div>
+    <h2>What this is not</h2>
+    <div class="two-col">
+      <div class="two-col-item"><strong style="color: var(--ink);">Not a shopping app.</strong> Recipe ingredients are not forwarded to a grocery store or shopping list service.</div>
+      <div class="two-col-item"><strong style="color: var(--ink);">Not a cooking teacher.</strong> Built for users who already know how to use their recipes. No technique explanations, no beginner guidance.</div>
+      <div class="two-col-item"><strong style="color: var(--ink);">Not a pantry manager.</strong> The app doesn't scan or track what's in your pantry — ingredient search is user-entered, not pantry-synced.</div>
+      <div class="two-col-item"><strong style="color: var(--ink);">Not a social platform.</strong> Single-user in v1. No sharing, no social features, no public recipes.</div>
+    </div>
+  </section>
+
+  <!-- Re-engagement -->
+  <section>
+    <div class="section-eyebrow">05 — Re-engagement</div>
+    <h2>Surfacing recipes at the right moment</h2>
+    <p>Import solves the rescue problem. Re-engagement solves the return problem. Getting recipes onto the phone doesn't automatically rebuild the habit of cooking from them — the app needs to do that work too.</p>
+
+    <div class="re-engagement">
+      <div class="re-engagement-label">Core re-engagement features</div>
+      <p><strong>Unified search.</strong> A single search surface handles both recipe name lookup and ingredient-based discovery. Typing "Chantilly" surfaces the recipe by name. Typing "chicken, peppers" surfaces recipes by ingredient. Ambiguous queries — like "chicken" — return both recipe name matches and ingredient matches together, letting the user self-select. A toggle on ingredient results allows "match all" vs. "match any." Search is accessible from the home screen, not buried in the library.</p>
+      <p><strong>What you haven't made lately.</strong> Lightweight surfacing on the home screen — not algorithmic push notifications, just a quiet reminder. "You haven't made the Chantilly cake in a while." Recipes imported but never cooked rise to the top over time. This is v1's answer to re-engagement; behavior-based surfacing that learns which recipes actually matter to each user is a v2 feature.</p>
+    </div>
+
+    <div class="note-box principle">
+      <div class="note-label">Design principle</div>
+      <p>Unified search doesn't ask users to declare intent upfront. A user who types "chicken" looking for a specific recipe might see an ingredient match they hadn't considered and discover they can make something tonight. Re-engagement happens incidentally — which is the best kind.</p>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section>
+    <div class="section-eyebrow">06 — Features</div>
+    <h2>Requirements</h2>
+
+    <h4>Privacy</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Usage analytics collected to measure product health — no personally identifiable information included</li>
+        <li>Recipe content, ingredients, and user data stored on-device only; never transmitted or sold</li>
+      </ul>
+    </div>
+
+    <h4>Onboarding</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>First use opens to a welcome screen that guides the user into importing their first recipe</li>
+        <li>Onboarding tone reflects the rescue framing — "bring your recipes home," not "add your first recipe"</li>
+        <li>Both import paths (file upload, photo capture) are presented as equal entry points</li>
+      </ul>
+    </div>
+
+    <h4>Recipe Import</h4>
+    <div class="feature-block">
+      <div class="feature-block-title">Supported formats</div>
+      <ul class="feature-list">
+        <li>Files: txt, pdf, docx — PDFs may contain images or text; the app recognizes and parses either</li>
+        <li>Images: camera capture or photo library</li>
+        <li>Bulk upload: all files in a folder imported at once; successful imports, flagged imports, and failed imports surfaced separately</li>
+      </ul>
+    </div>
+
+    <div class="feature-block">
+      <div class="feature-block-title">Parsing intelligence</div>
+      <ul class="feature-list">
+        <li>Handles imprecise quantities: "a pinch," "a bunch," "to taste"</li>
+        <li>Parses preparation notes: "1 clove of garlic, minced"</li>
+        <li>Parses user notes: "Next time, more sugar" — stored separately from recipe steps</li>
+        <li>Understands ingredient synonyms: green onions, scallions, and spring onions are the same thing</li>
+        <li>Common ingredients pre-loaded; new ingredients added as recipes are converted</li>
+        <li>Parses individual recipe steps and links each step to the ingredients it requires</li>
+        <li>If a scanned recipe matches an existing recipe at ≥ 95%, flagged for user review before insertion</li>
+      </ul>
+    </div>
+
+    <div class="feature-block">
+      <div class="feature-block-title">Manual corrections</div>
+      <ul class="feature-list">
+        <li>Recipes imported below confidence threshold are flagged for review — not discarded</li>
+        <li>Correction screen highlights uncertain ingredients or steps in the UI</li>
+        <li>User can: accept as-is, edit and finalize, or skip for later</li>
+        <li>Once accepted, the "needs attention" flag is cleared</li>
+        <li>When opened from the import screen, the next flagged recipe loads automatically</li>
+      </ul>
+    </div>
+
+    <div class="feature-block">
+      <div class="feature-block-title">Failed import recovery</div>
+      <ul class="feature-list">
+        <li>Recipes that cannot be parsed with significant confidence added to a recovery queue</li>
+        <li>Queue displayed immediately after import</li>
+        <li>Retry mode: deeper scan experience, similar to check scanning in a banking app — app parses the image at capture time</li>
+        <li>User decides per recipe: retry, skip, or discard</li>
+      </ul>
+    </div>
+
+    <h4>Recipe List</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Default view shows all imported recipes without filters</li>
+        <li>Recipes needing manual attention displayed with visible indicator</li>
+        <li>Recipes not yet cooked surfaced separately or highlighted — supports the re-engagement goal</li>
+        <li>Recipe opened by a single tap</li>
+        <li>Scroll position remembered — exiting a recipe returns to last position in list</li>
+        <li>Recipe photo (if taken) used as card image in list view</li>
+      </ul>
+    </div>
+
+    <h4>Unified Search</h4>
+    <div class="feature-block">
+      <div class="feature-block-title">Recipe name search</div>
+      <ul class="feature-list">
+        <li>User types a recipe name or partial name; library returns matching recipes immediately</li>
+        <li>Accessible from home screen — primary navigation tool for users who know what they want to make</li>
+        <li>Results drawn from the user's library only, never a generic database</li>
+      </ul>
+    </div>
+
+    <div class="feature-block">
+      <div class="feature-block-title">Ingredient search</div>
+      <ul class="feature-list">
+        <li>User enters ingredients on hand as chips; app searches their library for matching recipes</li>
+        <li>Toggle: match all entered ingredients vs. match any</li>
+        <li>Results ranked by match quality; partial matches visible with missing ingredients noted</li>
+        <li>Re-engagement entry point — for users who don't know what they want to make yet</li>
+      </ul>
+    </div>
+
+    <div class="feature-block">
+      <div class="feature-block-title">Unified results</div>
+      <ul class="feature-list">
+        <li>Ambiguous queries — a single word like "chicken" — return both recipe name matches and ingredient matches in the same results view, grouped by type</li>
+        <li>User self-selects which result is relevant; no upfront intent declaration required</li>
+        <li>A user searching by name may discover an ingredient match they hadn't considered — re-engagement happens incidentally</li>
+      </ul>
+    </div>
+
+    <h4>Cooking from a Recipe</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Opening a recipe that needs manual attention begins with the correction screen — user can correct, skip, or cancel</li>
+        <li>Cooking screen opens to an ingredients view for prep before cooking begins</li>
+        <li>Steps view shows one step at a time — no accidental scrolling through the recipe</li>
+        <li>On each step, a gesture surfaces the ingredients pertinent to that step as an overlay or split panel</li>
+        <li>Volume-to-weight conversion available by ingredient when the user enters a conversion factor; toggleable on the main recipe screen</li>
+        <li>Gesture to capture notes during cooking — attached to the recipe</li>
+        <li>Recipe editable during cooking; edits saved</li>
+        <li>Photo of the finished meal can be taken from within the cooking screen; attached to the recipe and used as the list card image</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Open Questions -->
+  <section>
+    <div class="section-eyebrow">07 — Open Questions</div>
+    <h2>What needs to be resolved</h2>
+
+    <div class="note-box open" style="margin-bottom: 14px;">
+      <div class="note-label">Architectural — bulk import surface</div>
+      <p>Bulk upload from a desktop folder implies a web interface. The current spec is mobile-only. This is an unresolved architectural decision: does Heirloom become a two-surface product (web for bulk import, mobile for cooking), or is mobile bulk import solvable without a separate web app? Decision deferred to v1 planning.</p>
+    </div>
+
+    <div class="two-col">
+      <div class="two-col-item">What happens when a recipe cannot be parsed at all — no recognizable structure? Added to failed queue, or discarded immediately?</div>
+      <div class="two-col-item">What does the app do when the scanned document is not a recipe? Error state, or a graceful redirect to manual entry?</div>
+      <div class="two-col-item">Recipes written in a foreign language — how does this affect ingredient synonym lists and preparation method parsing?</div>
+      <div class="two-col-item">Two ingredients in a recipe share a name but have different preparations — e.g., "butter, softened" and "butter, melted." How does the parser distinguish them?</div>
+      <div class="two-col-item">If the user never completes manual correction, does the recipe remain in a flagged state indefinitely? Is there a time-based resolution?</div>
+      <div class="two-col-item">Is the effort of conversion worth it even with some manual correction required? This is the core adoption risk — the correction experience must not feel like work.</div>
+      <div class="two-col-item">Export and backup — full library export to a standard format (JSON, PDF, or both) for backup and device migration. Recipes are personal data with real sentimental value; losing them to a lost phone is unacceptable in a mature product.</div>
+    </div>
+  </section>
+
+  <!-- Out of Scope -->
+  <section>
+    <div class="section-eyebrow">08 — Out of Scope / V2</div>
+    <h2>Noted for later</h2>
+    <div class="two-col">
+      <div class="two-col-item">Recipe scaling</div>
+      <div class="two-col-item">Ingredient substitutions ("vinegar in milk if you don't have buttermilk")</div>
+      <div class="two-col-item">Pantry entry and management</div>
+      <div class="two-col-item">Camera-based pantry scanning</div>
+      <div class="two-col-item">Parallel step parsing — identifying steps two people could do simultaneously</div>
+      <div class="two-col-item">Voice recognition for hands-free cooking</div>
+      <div class="two-col-item">Recipe albums and collections</div>
+      <div class="two-col-item">Social features — single recipe sharing and album sharing</div>
+    </div>
+  </section>
+
+  <div class="footer-rule">
+    <span>Heirloom — Product Requirements Document v1.2</span>
+    <span>May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

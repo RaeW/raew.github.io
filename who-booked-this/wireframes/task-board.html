@@ -1,0 +1,133 @@
+<style>
+.device{width:320px;margin:0 auto;background:var(--color-background-secondary);border-radius:32px;padding:12px;border:0.5px solid var(--color-border-secondary)}
+.screen{background:var(--color-background-primary);border-radius:24px;overflow:hidden;min-height:620px}
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 4px;font-size:11px;color:var(--color-text-tertiary)}
+.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 10px}
+.nav-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.nav-sub{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
+.section-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);padding:6px 14px 4px;letter-spacing:.04em;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between}
+.task-card{margin:0 14px 8px;border-radius:12px;padding:10px 12px;cursor:pointer}
+.task-card.urgent{background:#FAEEDA;border:0.5px solid #EF9F27}
+.task-card.open{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary)}
+.task-card.claimed{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary)}
+.task-card.done{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);opacity:.6}
+.task-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.task-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+.task-card.done .task-title{text-decoration:line-through;color:var(--color-text-tertiary)}
+.task-meta{font-size:11px;color:var(--color-text-secondary);line-height:1.5}
+.task-card.urgent .task-meta{color:#854F0B}
+.status-pill{font-size:10px;padding:2px 8px;border-radius:8px;white-space:nowrap;flex-shrink:0}
+.pill-urgent{background:#FAC775;color:#633806}
+.pill-open{background:#F1EFE8;color:#5F5E5A}
+.pill-claimed{background:#E1F5EE;color:#085041}
+.pill-done{background:#E6F1FB;color:#0C447C}
+.task-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
+.creator-note{font-size:10px;color:var(--color-text-tertiary)}
+.claim-btn{font-size:11px;padding:4px 10px;border-radius:8px;background:#534AB7;color:#EEEDFE;border:none;cursor:pointer}
+.owner-row{display:flex;align-items:center;gap:5px;font-size:11px;color:#085041}
+.avatar-xs{width:18px;height:18px;border-radius:50%;background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:500;color:var(--color-text-secondary)}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:4px 14px 8px}
+.fab{display:flex;justify-content:flex-end;padding:8px 14px 12px}
+.fab-btn{background:#534AB7;color:#EEEDFE;border:none;border-radius:20px;padding:8px 16px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px;cursor:pointer}
+.deadline-badge{font-size:10px;padding:2px 7px;border-radius:6px;background:#FAC775;color:#633806;font-weight:500}
+</style>
+
+<div class="device">
+  <div class="screen">
+    <div class="status-bar"><span>9:41</span><div style="display:flex;gap:4px"><i class="ti ti-wifi" style="font-size:13px"></i><i class="ti ti-battery-2" style="font-size:13px"></i></div></div>
+
+    <div class="nav-bar">
+      <div>
+        <div class="nav-title">Tasks</div>
+        <div class="nav-sub">Yellowstone Trip · 2 unclaimed</div>
+      </div>
+    </div>
+
+    <!-- Urgent unclaimed -->
+    <div class="section-label">
+      <span>Needs someone soon</span>
+      <span class="deadline-badge">Deadline approaching</span>
+    </div>
+
+    <div class="task-card urgent" onclick="sendPrompt('Show me the task detail screen for return rental van in Who Booked This?')">
+      <div class="task-top">
+        <div>
+          <div class="task-title">Return rental van</div>
+          <div class="task-meta">Due Sun Jun 15 by 10:00am · noticed by Dad</div>
+        </div>
+        <span class="status-pill pill-urgent">Unclaimed</span>
+      </div>
+      <div class="task-footer">
+        <span class="creator-note">Anyone can claim this</span>
+        <button class="claim-btn" onclick="event.stopPropagation();sendPrompt('What happens when I claim a task in Who Booked This?')">I'll do this</button>
+      </div>
+    </div>
+
+    <!-- Open unclaimed -->
+    <div class="section-label">Open — unclaimed</div>
+
+    <div class="task-card open" onclick="sendPrompt('Show me the task detail for pick up snack order')">
+      <div class="task-top">
+        <div>
+          <div class="task-title">Pick up snack order</div>
+          <div class="task-meta">Due Sun Jun 15 by noon · noticed by Mom</div>
+        </div>
+        <span class="status-pill pill-open">Unclaimed</span>
+      </div>
+      <div class="task-footer">
+        <span class="creator-note">Anyone can claim this</span>
+        <button class="claim-btn" onclick="event.stopPropagation()">I'll do this</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Claimed -->
+    <div class="section-label">Claimed</div>
+
+    <div class="task-card claimed" onclick="sendPrompt('Can I unclaim a task I already claimed in Who Booked This?')">
+      <div class="task-top">
+        <div>
+          <div class="task-title">Book Canyon Lodge lunch</div>
+          <div class="task-meta">Due Jun 12 · noticed by Aunt Rita</div>
+        </div>
+        <span class="status-pill pill-claimed">Claimed</span>
+      </div>
+      <div class="task-footer">
+        <div class="owner-row">
+          <div class="avatar-xs">U</div>
+          <span>Uncle Dave is on it</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Done -->
+    <div class="section-label">Completed</div>
+
+    <div class="task-card done">
+      <div class="task-top">
+        <div>
+          <div class="task-title">Confirm cabin check-in time</div>
+          <div class="task-meta">Completed Jun 10 · by Mom</div>
+        </div>
+        <span class="status-pill pill-done">Done</span>
+      </div>
+    </div>
+
+    <div class="fab">
+      <button class="fab-btn" onclick="sendPrompt('Show me the Create Task screen for Who Booked This?')">
+        <i class="ti ti-plus"></i> Notice a gap
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:1.5rem 0 0;font-size:11px;color:var(--color-text-secondary)">
+  <div style="border-left:3px solid #EF9F27;padding-left:8px">Urgent tasks float to the top with amber treatment. Visibility rises as deadline approaches — no one is named, everyone can see it.</div>
+  <div style="border-left:3px solid #534AB7;padding-left:8px">"I'll do this" not "Assign to me." The language reinforces that claiming is a voluntary act, not an administrative one.</div>
+  <div style="border-left:3px solid #1D9E75;padding-left:8px">"Noticed by" not "Created by." Small word choice that separates observation from ownership throughout the UI.</div>
+  <div style="border-left:3px solid #AFA9EC;padding-left:8px">The FAB says "Notice a gap" — same language, same principle. Surfacing a problem is rewarded, not penalized.</div>
+</div>

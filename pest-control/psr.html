@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pesticide-Sensitive Registry — Rae Wree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1C1B19;
+    --ink-mid: #4A4840;
+    --ink-light: #8A8780;
+    --ink-faint: #C8C5BE;
+    --paper: #FAF8F4;
+    --paper-warm: #F2EFE8;
+    --paper-warmer: #E8E3D8;
+    --accent: #2D5A3D;
+    --accent-mid: #4A8A5F;
+    --accent-light: #E8F2EC;
+    --amber: #633806;
+    --amber-light: #FAEEDA;
+    --rule: rgba(28,27,25,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-light);
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: color .15s;
+  }
+
+  .back-link:hover { color: var(--ink); }
+
+  /* Header */
+  .header {
+    margin-bottom: 64px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .header-sub {
+    font-size: 17px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    max-width: 560px;
+    margin-bottom: 28px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+
+  .meta-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .meta-value {
+    font-size: 13px;
+    color: var(--ink-mid);
+  }
+
+  /* Sections */
+  section { margin-bottom: 56px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Lora', serif;
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+
+  h3 {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink);
+    margin: 32px 0 10px;
+  }
+
+  p {
+    color: var(--ink-mid);
+    margin-bottom: 16px;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* Pullquote */
+  .pullquote {
+    margin: 36px 0;
+    padding: 0 0 0 24px;
+    border-left: 2px solid var(--accent-mid);
+  }
+
+  .pullquote p {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+
+  /* User list */
+  .user-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 540px) { .user-list { grid-template-columns: 1fr; } }
+
+  .user-pill {
+    padding: 10px 14px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.4;
+  }
+
+  /* Feature blocks */
+  .feature-block {
+    margin: 20px 0;
+    padding: 20px 24px;
+    background: var(--paper-warm);
+    border-radius: 10px;
+  }
+
+  .feature-block-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--paper-warmer);
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .feature-list li {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .feature-list li::before {
+    content: '·';
+    position: absolute;
+    left: 3px;
+    color: var(--ink-faint);
+  }
+
+  /* Note boxes */
+  .note-box {
+    margin: 20px 0;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .note-box.principle {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent-mid);
+  }
+
+  .note-box.principle p { color: var(--accent); margin: 0; }
+
+  .note-box.open {
+    background: var(--amber-light);
+    border-left: 3px solid #EF9F27;
+  }
+
+  .note-box.open p { color: var(--amber); margin: 0; }
+
+  .note-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-box.principle .note-label { color: var(--accent); }
+  .note-box.open .note-label { color: var(--amber); }
+
+  /* Workflow distinction box */
+  .distinction {
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  @media (max-width: 540px) { .distinction { grid-template-columns: 1fr; } }
+
+  .distinction-item {
+    padding: 14px 16px;
+    border-radius: 8px;
+    background: var(--paper-warm);
+  }
+
+  .distinction-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .distinction-item p {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Footer */
+  .footer-rule {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 48px 20px 80px; }
+    section { margin-bottom: 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="back-link" href="../index.html">← Pest Control Software: Three Gaps</a>
+
+  <header class="header">
+    <div class="header-eyebrow">Pest Control Software · Analysis 01 of 03</div>
+    <h1>Pesticide-Sensitive Registry: A Compliance Gap in Plain Sight</h1>
+    <p class="header-sub">Colorado requires pest control operators to notify sensitive individuals before nearby applications. The state has done the geographic work. The software hasn't caught up.</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Type</span>
+        <span class="meta-value">Gap analysis</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Domain</span>
+        <span class="meta-value">Pest control / compliance</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Context</span>
+        <span class="meta-value">B2B · Workflow</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value">May 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- The Problem -->
+  <section>
+    <div class="section-eyebrow">01 — The Problem</div>
+    <h2>A compliance requirement with no software support</h2>
+    <p>Colorado law requires licensed pesticide applicators to notify sensitive individuals at least 24 hours before any application made within 250 feet of their registered address. The notification rules are specific: multiple attempts are required unless made electronically, voicemail doesn't count, and any changes to a scheduled application require a new notification. Records of all attempts must be maintained.</p>
+    <p>Until July 2024, the state fulfilled its end of this requirement by mailing a printed booklet of registered individuals to every licensed applicator. The applicator's end — cross-referencing that booklet against upcoming jobs, making documented notification attempts, and maintaining records of compliance — was entirely manual.</p>
+    <p>The booklet is now an online, GIS-enabled database restricted to licensed applicators. The state has done the geographic work: it knows which registered addresses fall within 250 feet of any given property. That information is accessible. What doesn't exist is any connection between that database and the scheduling software pest control companies actually use to run their operations.</p>
+
+    <div class="pullquote">
+      <p>The state has done the geographic work. The gap is between a searchable government database and the software sitting on every applicator's desk.</p>
+    </div>
+  </section>
+
+  <!-- Why It Matters -->
+  <section>
+    <div class="section-eyebrow">02 — Why It Matters</div>
+    <h2>Manual compliance fails under operational pressure</h2>
+    <p>A missed notification isn't just a customer service failure — it's a regulatory violation with potential licensing consequences. For a small pest control operator running dozens of jobs a day across multiple technicians, manually cross-referencing a registry against a live schedule is the kind of task that gets done inconsistently, documented poorly, and forgotten entirely when things get busy.</p>
+    <p>The people on the registry are there because pesticide exposure poses a genuine health risk to them. The notification requirement exists to protect them. The gap between a searchable government database and the software sitting on every applicator's desk means that protection depends entirely on human memory and manual process.</p>
+
+    <div class="note-box principle">
+      <div class="note-label">The core gap</div>
+      <p>This is not a compliance awareness problem. Operators know the requirement exists. It's a workflow integration problem — the registry lives in one place, the schedule lives in another, and nothing connects them.</p>
+    </div>
+  </section>
+
+  <!-- Users -->
+  <section>
+    <div class="section-eyebrow">03 — Primary Users</div>
+    <h2>Who carries this burden today</h2>
+    <div class="user-list">
+      <div class="user-pill">Dispatchers coordinating daily schedules</div>
+      <div class="user-pill">Office staff responsible for compliance outreach</div>
+      <div class="user-pill">Field technicians handling unresolved notifications</div>
+      <div class="user-pill">Small business owners managing regulatory risk</div>
+    </div>
+    <p>The compliance burden falls primarily on dispatchers and office staff, who are already managing a high-volume scheduling workflow. The current process asks them to add a manual lookup step against a separate government database for every job in the schedule — not once, but every time a job is added, moved, or changed.</p>
+  </section>
+
+  <!-- Proposed Solution -->
+  <section>
+    <div class="section-eyebrow">04 — What I'd Propose</div>
+    <h2>Integration, not a new workflow</h2>
+    <p>The core feature is straightforward: property records in the scheduling software carry an adjacency attribute on the appointment — a flag indicating that a PSR-registered address falls within 250 feet. That flag is established by automatically syncing against the PSR database at booking time. The scheduler doesn't need to think about the registry at all. The software just knows.</p>
+
+    <h3>Notification queuing</h3>
+    <p>Once an appointment with an adjacency notification requirement is created, the software queues the notification in alignment with the appointment's schedule. When the appointment is finalized, the software generates the tasks necessary for notification automatically — an automated queue for electronic notifications, a call list for manual ones. The workflow supports outreach beginning sufficiently ahead of the 24-hour window to allow multiple documented attempts.</p>
+    <p>Most days, no notifications will be required. The software must have a mechanism to surface a task on days when a sensitive registry call is required without it becoming background noise. The most workable approach: append sensitive registry calls to the normal daily call list, displayed differently in the UI — a bold border, a distinct background — so they're visible within the dispatcher's existing workflow rather than requiring a separate lookup step.</p>
+
+    <h3>Rescheduling protection</h3>
+    <p>If an appointment with a sensitive registry notification requirement changes dates, the notification clock resets. The software prevents rescheduling that leaves less than 24 hours available for notice, surfaces an explanation to the user, and automatically clears the notification attempt history and "notification completed" flags. The notification re-enters the queue based on the updated appointment information. No manual reset required.</p>
+
+    <h3>Legal distinctions as workflow distinctions</h3>
+    <p>The notification workflow must reflect the legal distinctions that create liability. These are not just different contact methods — they are different workflows with different compliance requirements.</p>
+
+    <div class="distinction">
+      <div class="distinction-item">
+        <div class="distinction-label">Electronic / confirmed</div>
+        <p>One attempt required. Triggers the 24-hour clock for any schedule changes.</p>
+      </div>
+      <div class="distinction-item">
+        <div class="distinction-label">Non-electronic (including voicemail)</div>
+        <p>Two documented attempts required. Door notice as last resort. Different escalation path.</p>
+      </div>
+    </div>
+
+    <h3>Self-generating compliance record</h3>
+    <p>Every attempt — successful or not — is logged with timestamp, method, and outcome. At the end of the job the record exists without anyone having to reconstruct it. Failed notifications escalate visibly: a job with an unresolved notification requirement approaching the 24-hour window is surfaced to the scheduler before the window closes, not after.</p>
+
+    <h3>Field escalation</h3>
+    <p>If the office has been unable to confirm notice prior to the appointment, responsibility passes to the field. When a technician opens an appointment with an unresolved notification requirement, the software surfaces a prompt to place a written notice on the door of the registered address before beginning service. The attempt is logged from the field, timestamped, and added to the compliance record automatically.</p>
+
+    <div class="note-box principle">
+      <div class="note-label">Design principle</div>
+      <p>This fits into how a dispatcher already works rather than adding a new lookup step. The compliance burden shrinks to handling exceptions — the software handles the routine.</p>
+    </div>
+  </section>
+
+  <!-- Open Questions -->
+  <section>
+    <div class="section-eyebrow">05 — Open Questions</div>
+    <h2>What needs to be resolved first</h2>
+
+    <div class="note-box open">
+      <div class="note-label">PSR API access</div>
+      <p>The state moved to an online system in July 2024. Whether that system exposes a queryable API — or whether integration would require a different approach such as scheduled exports or manual sync — is the first question any development effort would need to answer. Everything else depends on it.</p>
+    </div>
+
+    <div class="feature-block">
+      <div class="feature-block-title">Additional questions for scoping</div>
+      <ul class="feature-list">
+        <li>Does the PSR database update in real time, or on a batch schedule? The sync frequency affects how current the adjacency flags can be.</li>
+        <li>How do existing scheduling platforms expose their data model? Integration complexity varies significantly by vendor.</li>
+        <li>Do other states have equivalent registries with similar notification requirements? A solution designed for Colorado may be generalizable.</li>
+        <li>What is the current false-negative rate for manual compliance? Establishing a baseline is necessary to measure improvement.</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="footer-rule">
+    <span>Pest Control Software: Three Gaps · Analysis 01</span>
+    <span>May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who Booked This? — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1C1B19;
+    --ink-mid: #4A4840;
+    --ink-light: #8A8780;
+    --ink-faint: #C8C5BE;
+    --paper: #FAF8F4;
+    --paper-warm: #F2EFE8;
+    --paper-warmer: #E8E3D8;
+    --accent: #3C3489;
+    --accent-mid: #7F77DD;
+    --accent-light: #EEEDFE;
+    --green: #085041;
+    --green-light: #E1F5EE;
+    --amber: #633806;
+    --amber-light: #FAEEDA;
+    --rule: rgba(28,27,25,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Layout ── */
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  /* ── Header ── */
+  .header {
+    margin-bottom: 72px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .header-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    max-width: 560px;
+    margin-bottom: 28px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .meta-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .meta-value {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-mid);
+  }
+
+  /* ── TL;DR ── */
+  .tldr {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin-bottom: 64px;
+  }
+
+  .tldr-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .tldr ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tldr li {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1.5;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .tldr li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-mid);
+    font-size: 12px;
+  }
+
+  /* ── Sections ── */
+  section {
+    margin-bottom: 64px;
+  }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Lora', serif;
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink);
+    margin: 36px 0 12px;
+  }
+
+  p {
+    color: var(--ink-mid);
+    margin-bottom: 16px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Decision blocks ── */
+  .decision {
+    margin: 48px 0;
+    padding: 28px 32px;
+    background: var(--paper-warm);
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .decision-number {
+    position: absolute;
+    top: -14px;
+    left: 28px;
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .decision h3 {
+    margin-top: 8px;
+    font-style: normal;
+    font-size: 17px;
+    color: var(--ink);
+  }
+
+  .decision p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .decision-evolution {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--paper-warmer);
+  }
+
+  .decision-evolution-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+  }
+
+  .decision-evolution p {
+    font-size: 14px;
+    color: var(--ink-mid);
+    font-style: italic;
+  }
+
+  /* ── Validation blocks ── */
+  .validation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 560px) {
+    .validation-grid { grid-template-columns: 1fr; }
+  }
+
+  .validation-card {
+    background: var(--paper-warm);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .validation-card-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .validation-card p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    margin: 0;
+  }
+
+  /* ── Assumption / risk inline ── */
+  .assumption-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  @media (max-width: 560px) {
+    .assumption-row { grid-template-columns: 1fr; }
+  }
+
+  .assumption-box {
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .assumption-box.assumption {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent-mid);
+  }
+
+  .assumption-box.risk {
+    background: var(--amber-light);
+    border-left: 3px solid #EF9F27;
+  }
+
+  .assumption-box-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .assumption-box.assumption .assumption-box-label { color: var(--accent); }
+  .assumption-box.risk .assumption-box-label { color: var(--amber); }
+  .assumption-box.assumption p { color: var(--accent); margin: 0; }
+  .assumption-box.risk p { color: var(--amber); margin: 0; }
+
+  /* ── Artifacts section ── */
+  .artifact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .artifact-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+  }
+
+  .artifact-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .artifact-info { flex: 1; }
+
+  .artifact-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .artifact-desc {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.4;
+  }
+
+  /* ── Pullquote ── */
+  .pullquote {
+    margin: 40px 0;
+    padding: 0 0 0 24px;
+    border-left: 2px solid var(--accent-mid);
+  }
+
+  .pullquote p {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+
+  /* ── Metrics ── */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 24px 0;
+  }
+
+  @media (max-width: 560px) {
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  .metric-card {
+    padding: 16px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--ink-light);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .metric-signal {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  /* ── Footer rule ── */
+  .footer-rule {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 480px) {
+    .page { padding: 48px 20px 80px; }
+    .header { margin-bottom: 48px; }
+    section { margin-bottom: 48px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-eyebrow">Product Thinking Portfolio · Case Study 01</div>
+    <h1>Who Booked This?</h1>
+    <p class="header-sub">A mobile app for coordinating group travel — designed from first principles for the extended family trip.</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Type</span>
+        <span class="meta-value">0→1 concept</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Platform</span>
+        <span class="meta-value">Mobile (iOS-first)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Context</span>
+        <span class="meta-value">Consumer / B2C</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Deliverables</span>
+        <span class="meta-value">PRD, flows, wireframes</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- TL;DR -->
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <ul>
+      <li>Group travel coordination fails because plans live in text threads with no stable shared record</li>
+      <li>Designed a wiki-style itinerary with forks, proposals, and a task model that separates noticing a gap from owning it</li>
+      <li>Three access tiers — full, participant (teenagers), child — reflect real social dynamics, not just age brackets</li>
+      <li>Key assumptions identified and stress-tested; two design decisions evolved during that process</li>
+    </ul>
+  </div>
+
+  <!-- The Problem -->
+  <section>
+    <div class="section-eyebrow">01 — The Problem</div>
+    <h2>The absence of a shared, stable record</h2>
+    <p>Group trips fail not because people don't care, but because information lives in a dozen different text threads. Someone always missed the updated plan. No one knows what's actually decided versus still being debated. One person absorbs all the coordination overhead, and when something changes, there's no reliable way to tell everyone.</p>
+    <p>The failure mode is consistent across extended family travel: the real problem isn't a lack of enthusiasm or ideas. It's the gap between shared intent and durable, shared coordination.</p>
+
+    <div class="pullquote">
+      <p>"The core failure is not communication. It is the absence of a shared, stable record of group intent."</p>
+    </div>
+
+    <p>I designed this product from observation and reasoning, not from field research. That shapes how I hold the assumptions — carefully, and with specific hypotheses about what would validate or kill them. The "what I'd validate" section below is the honest version of that.</p>
+  </section>
+
+  <!-- Who It's For -->
+  <section>
+    <div class="section-eyebrow">02 — Who It's For</div>
+    <h2>Three people with very different needs</h2>
+    <p>The extended family trip concentrates every coordination failure this product is designed to address: multiple family units with different priorities, implicit generational hierarchies, and participants ranging from grandparents to toddlers.</p>
+
+    <h3>The organizing adult</h3>
+    <p>The person who booked the Vrbo and is currently holding the entire itinerary in their head. Takes initiative on logistics, absorbs all coordination overhead, and has no structural support for any of it. The product's primary value: a shared surface so they stop being the single point of failure.</p>
+
+    <h3>The teenager</h3>
+    <p>Most travel apps think in two modes: full user and child. The extended family trip has a third — someone old enough to have real preferences and deserve to be heard, but who existing tools either ignore or treat like a small adult.</p>
+    <p>The participant tier is primarily about giving that person a genuine voice: they can see the full itinerary, propose ideas, vote, comment, and make personal commitments. The protection against coercion follows from that same respect — if you genuinely treat teenagers as participants, you also don't let other users assign them tasks. The coercion happens informally in real life. The app will not formalize or accelerate it.</p>
+
+    <h3>The younger child</h3>
+    <p>Needs to know what's happening each day. Has no planning responsibility and no interest in logistics debates. Child mode provides a read-only, day-by-day view of finalized plans — a completely different visual language, warmer and simpler, with descriptions written for a child rather than an adult. Nothing to manage.</p>
+  </section>
+
+  <!-- Three Decisions -->
+  <section>
+    <div class="section-eyebrow">03 — Key Decisions</div>
+    <h2>Three bets worth explaining</h2>
+    <p>The product has a lot of features, but three decisions shaped everything else. Each one started as a conviction, got stress-tested, and came out either confirmed or meaningfully refined.</p>
+
+    <div class="decision">
+      <div class="decision-number">Decision 01</div>
+      <h3>Forks instead of consensus</h3>
+      <p>Most collaboration tools treat disagreement as a problem to resolve. I treated it as a feature. If someone wants to do something different from the group, they fork the itinerary — a parallel plan, visible to everyone, operating alongside the main one. The main itinerary doesn't have to be a battleground. Forks are how the group handles the fact that not everyone wants the same thing, without anyone having to fight about it.</p>
+      <p>Forks are first-class objects: named, attributed, with their own itinerary items and committed flags. A fork can rejoin the main plan, or it can simply expire when the sub-group does their thing and comes back for dinner. A fork dying quietly is fine — the app is a coordination surface, not a tracker.</p>
+      <div class="decision-evolution">
+        <div class="decision-evolution-label">How this evolved</div>
+        <p>Stress-testing revealed two vulnerabilities. First, the original merge-to-main feature allowed any user to unilaterally fold a fork back into the main itinerary — which cuts against the product's no-hidden-authority principle. Resolution: merge either gets dropped or becomes a proposal (one member nominates, the group sees it, anyone can object). Second, the fork model originally had one visibility mode. Adding open vs. private forks — where a private fork shows its existence but not its contents or membership — extended the model to cover a different use case: separation without conflict, not just disagreement. Grandma and Grandpa's date night doesn't need to be a group itinerary item.</p>
+      </div>
+    </div>
+
+    <div class="decision">
+      <div class="decision-number">Decision 02</div>
+      <h3>Separating observation from obligation on tasks</h3>
+      <p>This was the decision I arrived at latest and feel most confident about. The original instinct was a task system where someone creates a task and claims it. The problem: if noticing a gap automatically makes you responsible for filling it, people stop noticing gaps. You create an incentive for silence, which is exactly the wrong outcome.</p>
+      <p>In Who Booked This?, the person who notices that the rental car needs to be returned is not the person who has to return it. Noticing and doing are two separate acts. The task sits unclaimed, visible to everyone. As the deadline approaches, it rises in the UI and sends a group notification — not pointed at any individual, surfaced to everyone. Someone volunteers or they don't. The app never assigns.</p>
+      <div class="decision-evolution">
+        <div class="decision-evolution-label">How this evolved</div>
+        <p>The no-coercion principle was designed for asymmetric relationships — the teenager being voluntold, the implicit power dynamics in extended family groups. But applying one rule to all relationship types creates friction in symmetric ones. A couple coordinating logistics is a different social context. If a wife has already agreed offline that her husband will return the car, making him open the app just to claim a task is unnecessary friction. The real question is whether most real-world task assignments are genuinely unilateral or just pre-agreed logistics. A consent-based assignment model — where the assignee gets a notification and can decline — might preserve the principle while reducing that friction. That's the hypothesis to test.</p>
+      </div>
+    </div>
+
+    <div class="decision">
+      <div class="decision-number">Decision 03</div>
+      <h3>The adult-only visibility flag</h3>
+      <p>Child mode started as a planning restriction — children see a simplified view, nothing else. But there's a second problem most apps conflate with it: sometimes the adults are planning something the children shouldn't know about. A surprise. A budget conversation. Something that's simply not their business.</p>
+      <p>These are two distinct features. Child mode (access tier) restricts what a user can do. The adult-only flag (content visibility) controls what a user can see. Items with the flag don't appear as redacted in the child view — they simply don't exist. A child looking at the itinerary has no way of knowing something is hidden from them.</p>
+    </div>
+  </section>
+
+  <!-- What I'd Validate -->
+  <section>
+    <div class="section-eyebrow">04 — What I'd Validate</div>
+    <h2>The assumptions I'm watching most carefully</h2>
+    <p>This product was designed from reasoning, not from watching real users. These are the places where my reasoning could be wrong — and what I'd look for to find out.</p>
+
+    <h3>On tasks: does decoupling actually change behavior?</h3>
+    <div class="assumption-row">
+      <div class="assumption-box assumption">
+        <div class="assumption-box-label">The bet</div>
+        <p>If noticing a gap doesn't create ownership, people will surface problems they'd otherwise stay silent about.</p>
+      </div>
+      <div class="assumption-box risk">
+        <div class="assumption-box-label">The risk</div>
+        <p>Social pressure reasserts itself anyway, or the group free-rides — everyone notices, nobody claims.</p>
+      </div>
+    </div>
+    <div class="validation-grid">
+      <div class="validation-card">
+        <div class="validation-card-label">Signal to watch</div>
+        <p>Ratio of tasks created to tasks claimed by the creator. If it's consistently high, decoupling isn't working behaviorally.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">Signal to watch</div>
+        <p>Time-to-claim on tasks. If unclaimed tasks regularly expire, either the group is disengaged or the incentive structure failed.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">Better canary metric</div>
+        <p>Participating adults (not organizer, not teens) surfacing tasks. They have full context and no structural barrier. Silence here is the real warning.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">Hypothesis to test</div>
+        <p>A consent-based assignment model — assign with a notification the assignee can decline — reduces friction without abandoning the principle.</p>
+      </div>
+    </div>
+
+    <h3>On forks: does the group notice them?</h3>
+    <div class="assumption-row">
+      <div class="assumption-box assumption">
+        <div class="assumption-box-label">The bet</div>
+        <p>Fork visibility means the group knows where everyone is, reducing confusion about divergent plans.</p>
+      </div>
+      <div class="assumption-box risk">
+        <div class="assumption-box-label">The risk</div>
+        <p>Visibility is theoretical if half the group has notifications muted or isn't checking the app regularly.</p>
+      </div>
+    </div>
+    <p style="font-size:14px; margin-top: 12px;">I drew a clear product boundary here: the app serves people who are using the app. Someone in the group is keeping the others in the loop — that's a social contract, not a product responsibility. What I'd actually measure is notification engagement as a leading indicator of whether fork visibility is functioning in practice.</p>
+
+    <h3>On teenagers: do they use the participant tier?</h3>
+    <div class="assumption-row">
+      <div class="assumption-box assumption">
+        <div class="assumption-box-label">The bet</div>
+        <p>Giving teenagers genuine agency — propose, comment, vote, fork — makes the app feel like it's for them, not just about them.</p>
+      </div>
+      <div class="assumption-box risk">
+        <div class="assumption-box-label">The risk</div>
+        <p>The tier is designed thoughtfully but teenagers still don't engage, either because the trip context doesn't motivate them or because the adults around them don't either.</p>
+      </div>
+    </div>
+    <div class="validation-grid">
+      <div class="validation-card">
+        <div class="validation-card-label">Canary metric</div>
+        <p>Whether participant-tier members engage at all — propose, comment, or commit. Not whether they surface logistics gaps; that's not their job.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">What failure looks like</div>
+        <p>Participant accounts join but never interact. That suggests the tier is read-only in practice even if it's not read-only in design.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Success Metrics -->
+  <section>
+    <div class="section-eyebrow">05 — Success Metrics</div>
+    <h2>Measuring coordination, not engagement</h2>
+    <p>The standard metrics — downloads, session length, daily active users — measure reach, not whether the app is doing its actual job. The job is reducing coordination failures and keeping the whole group oriented around a shared plan.</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Trips where 3+ members edit the itinerary</div>
+        <div class="metric-signal">Shared ownership signal</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Items with committed flags from 2+ members</div>
+        <div class="metric-signal">Plan reached reality</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Unclaimed tasks claimed before deadline</div>
+        <div class="metric-signal">Gap-surfacing works</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Rate of proposal advancement without reversion</div>
+        <div class="metric-signal">Group is converging</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Audit trail access per trip</div>
+        <div class="metric-signal">Accountability is real</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Participant-tier engagement rate</div>
+        <div class="metric-signal">Teens feel included</div>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color: var(--ink-light); margin-top: 8px;">High session length is not a goal. The app should be fast to check and easy to update. Fork proliferation is not a goal — a trip with ten open forks has probably fragmented rather than coordinated.</p>
+  </section>
+
+  <!-- Artifacts -->
+  <section>
+    <div class="section-eyebrow">06 — Deliverables</div>
+    <h2>What's in this case study</h2>
+    <p>Four artifacts produced for this project, each covering a different layer of the product.</p>
+    <div class="artifact-list">
+      <div class="artifact-row">
+        <div class="artifact-icon">📋</div>
+        <div class="artifact-info">
+          <div class="artifact-name">Product Requirements Document</div>
+          <div class="artifact-desc">Full spec: problem, users, core model, features, design principles, known tradeoffs, and open questions. v1.3.</div>
+        </div>
+      </div>
+      <div class="artifact-row">
+        <div class="artifact-icon">🔀</div>
+        <div class="artifact-info">
+          <div class="artifact-name">User Flows (4)</div>
+          <div class="artifact-desc">Creating a trip and inviting the group · Proposal to Active · Forking the itinerary · Task lifecycle from gap to volunteer</div>
+        </div>
+      </div>
+      <div class="artifact-row">
+        <div class="artifact-icon">🗂</div>
+        <div class="artifact-info">
+          <div class="artifact-name">Screen Inventory</div>
+          <div class="artifact-desc">All 20 screens across 6 areas, each tagged by access tier (Full / Participant / Child) and described by function.</div>
+        </div>
+      </div>
+      <div class="artifact-row">
+        <div class="artifact-icon">📐</div>
+        <div class="artifact-info">
+          <div class="artifact-name">Wireframes (8)</div>
+          <div class="artifact-desc">Itinerary day view · Item detail · Proposals · Task board · Fork detail · Create task · Member list · Child view</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="footer-rule">
+    <span>Who Booked This? — Product Thinking Portfolio</span>
+    <span>May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

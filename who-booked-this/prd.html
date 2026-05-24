@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who Booked This? — Product Requirements Document</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1C1B19;
+    --ink-mid: #4A4840;
+    --ink-light: #8A8780;
+    --ink-faint: #C8C5BE;
+    --paper: #FAF8F4;
+    --paper-warm: #F2EFE8;
+    --paper-warmer: #E8E3D8;
+    --accent: #3C3489;
+    --accent-mid: #7F77DD;
+    --accent-light: #EEEDFE;
+    --green: #085041;
+    --green-light: #E1F5EE;
+    --amber: #633806;
+    --amber-light: #FAEEDA;
+    --rule: rgba(28,27,25,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 64px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .header-sub {
+    font-size: 17px;
+    color: var(--ink-mid);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+
+  .meta-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .meta-value {
+    font-size: 13px;
+    color: var(--ink-mid);
+  }
+
+  /* Sections */
+  section { margin-bottom: 56px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Lora', serif;
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 18px;
+  }
+
+  h3 {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink);
+    margin: 32px 0 10px;
+  }
+
+  h4 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin: 24px 0 8px;
+  }
+
+  p {
+    color: var(--ink-mid);
+    margin-bottom: 14px;
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* Principle / note boxes */
+  .note-box {
+    margin: 20px 0;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .note-box.principle {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent-mid);
+  }
+
+  .note-box.principle p { color: var(--accent); margin: 0; }
+
+  .note-box.constraint {
+    background: var(--amber-light);
+    border-left: 3px solid #EF9F27;
+  }
+
+  .note-box.constraint p { color: var(--amber); margin: 0; }
+
+  .note-box.rationale {
+    background: var(--paper-warm);
+    border-left: 3px solid var(--ink-faint);
+  }
+
+  .note-box.rationale p { color: var(--ink-mid); margin: 0; }
+
+  .note-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .note-box.principle .note-label { color: var(--accent); }
+  .note-box.constraint .note-label { color: var(--amber); }
+  .note-box.rationale .note-label { color: var(--ink-light); }
+
+  /* Feature blocks */
+  .feature-block {
+    margin: 20px 0;
+    padding: 18px 22px;
+    background: var(--paper-warm);
+    border-radius: 10px;
+  }
+
+  .feature-block-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--paper-warmer);
+  }
+
+  .feature-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .feature-list li {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .feature-list li::before {
+    content: '·';
+    position: absolute;
+    left: 3px;
+    color: var(--ink-faint);
+  }
+
+  /* State table */
+  .state-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 13px;
+  }
+
+  .state-table th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    padding: 8px 12px;
+    background: var(--paper-warmer);
+    border-bottom: 1px solid var(--paper-warmer);
+  }
+
+  .state-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--paper-warm);
+    color: var(--ink-mid);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  .state-table td:first-child {
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .state-table tr:last-child td { border-bottom: none; }
+
+  /* User cards */
+  .user-card {
+    margin: 16px 0;
+    padding: 18px 22px;
+    background: var(--paper-warm);
+    border-radius: 10px;
+  }
+
+  .user-card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .user-card p {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* Principles list */
+  .principle-block {
+    margin: 16px 0;
+    padding: 16px 20px;
+    background: var(--paper-warm);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent-mid);
+  }
+
+  .principle-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .principle-block p {
+    font-size: 13px;
+    color: var(--ink-mid);
+    margin: 0;
+    line-height: 1.6;
+  }
+
+  /* Metrics */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 540px) { .metrics-grid { grid-template-columns: 1fr; } }
+
+  .metric-card {
+    padding: 14px 16px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+  }
+
+  .metric-label {
+    font-size: 11px;
+    color: var(--ink-light);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  .metric-signal {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  /* Two-col grid */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+  }
+
+  @media (max-width: 540px) { .two-col { grid-template-columns: 1fr; } }
+
+  .two-col-item {
+    padding: 12px 14px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+  }
+
+  /* Monetization */
+  .mono-block {
+    margin: 16px 0;
+    padding: 18px 22px;
+    background: var(--paper-warm);
+    border-radius: 10px;
+  }
+
+  .mono-block p {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+
+  .mono-block p:last-child { margin-bottom: 0; }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-light);
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: color .15s;
+  }
+
+  .back-link:hover { color: var(--ink); }
+
+  /* Footer */
+  .footer-rule {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 48px 20px 80px; }
+    section { margin-bottom: 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="back-link" href="../index.html">← Who Booked This?</a>
+
+  <header class="header">
+    <div class="header-eyebrow">Product Requirements Document</div>
+    <h1>Who Booked This?</h1>
+    <p class="header-sub">A mobile app for coordinating group travel — designed for the extended family trip.</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Version</span>
+        <span class="meta-value">1.6</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value">May 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Platform</span>
+        <span class="meta-value">Mobile (iOS-first)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value">Complete</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. The Problem -->
+  <section>
+    <div class="section-eyebrow">01 — The Problem</div>
+    <h2>Why group trips fail</h2>
+    <p>Group trips fail not because people don't care, but because information lives in a dozen different text threads. Someone always misses the updated plan. No one knows what's actually decided versus still being debated.</p>
+    <p>This is a pattern observed repeatedly across group travel: the real failure mode isn't lack of enthusiasm or ideas — it's the gap between shared intent and durable, shared coordination.</p>
+    <p>Specific failure patterns: plans communicated informally and forgotten; one person becoming the de facto coordinator absorbing all the labor; decisions made in side conversations never reaching the full group; no reliable way to notify everyone when details change; no agreement on what's decided versus still proposed.</p>
+    <div class="note-box principle">
+      <div class="note-label">Design principle</div>
+      <p>The core failure is not communication. It is the absence of a shared, stable record of group intent.</p>
+    </div>
+  </section>
+
+  <!-- 2. Target Users -->
+  <section>
+    <div class="section-eyebrow">02 — Target Users</div>
+    <h2>Who this is built for</h2>
+    <p>The primary context is the extended family trip — a reunion, a vacation rental, a destination celebration. These trips concentrate every coordination failure the app is designed to address: multiple family units with different budgets and priorities, implicit generational hierarchies, and participants ranging from grandparents to toddlers.</p>
+    <p>This context also introduces the app's most important design constraint: the presence of teenagers. Teenagers on family trips occupy an awkward middle position — old enough to be socially pressured into responsibility, but young enough to be excluded from actual planning decisions. Who Booked This? treats this as a trust risk, not an edge case.</p>
+
+    <div class="user-card">
+      <div class="user-card-name">The organizing adult</div>
+      <p>The person who booked the Vrbo, built the group chat, and is currently holding the entire itinerary in their head. Takes initiative on logistics, absorbs all coordination overhead, and has no structural support for any of it. The app's primary value proposition is giving this person a shared surface so they stop being the single point of failure.</p>
+    </div>
+
+    <div class="user-card">
+      <div class="user-card-name">The participating adult</div>
+      <p>Other adults in the group — other parents, partners, grandparents, aunts and uncles. Varying levels of engagement: some are highly opinionated, some are just showing up. May have strong preferences about specific things while being entirely disengaged from everything else. Needs low-friction access to the plan and the ability to register preferences without being expected to manage anything.</p>
+    </div>
+
+    <div class="user-card">
+      <div class="user-card-name">The teenager</div>
+      <p>Not a child, not an adult. Has real preferences and deserves to know the plan. Should not be assigned tasks by the app under any circumstances — the coercion happens informally in real life; the app will not formalize or accelerate it. Sees the full itinerary and can propose or comment, but can only take on tasks through explicit personal commitment, never through assignment.</p>
+    </div>
+
+    <div class="note-box constraint">
+      <div class="note-label">Design constraint</div>
+      <p>Participant-tier members cannot be assigned tasks by anyone through the app. Their commitment is always self-declared. Full-access members may assign tasks to each other — that is coordination. Assigning tasks to teenagers is coercion, and the app will not enable it.</p>
+    </div>
+
+    <div class="user-card">
+      <div class="user-card-name">The younger child</div>
+      <p>Needs to know what's happening each day. Has no planning responsibility and no interest in logistics debates. Child mode provides a read-only, day-by-day view of finalized plans — nothing else.</p>
+    </div>
+  </section>
+
+  <!-- 3. Core Model -->
+  <section>
+    <div class="section-eyebrow">03 — Core Model</div>
+    <h2>How the system works</h2>
+
+    <h3>The itinerary as a wiki</h3>
+    <p>The group itinerary is a shared, editable document — not owned by any single user. Anyone in the group can propose, edit, or remove items. There is no designated coordinator with special authority. This maps to how trips actually evolve: chaotic early on, converging as the date approaches.</p>
+
+    <h3>The audit trail</h3>
+    <p>Every edit to the itinerary is logged with the author, timestamp, and previous value. The audit trail serves two purposes: accountability (edits are attributed, creating natural social friction against bad-faith changes) and memory ("when did we decide that?" is a question that kills group trips — the trail is the receipts). Items are never deleted — they are archived. The record is always recoverable.</p>
+
+    <h3>Item states</h3>
+    <p>Every item on the itinerary exists in one of five states, visible to the full group.</p>
+    <table class="state-table">
+      <tr>
+        <th>State</th>
+        <th>Meaning</th>
+        <th>Who sets it</th>
+      </tr>
+      <tr>
+        <td>Proposed</td>
+        <td>A user has floated an idea. Visible to all, no action required.</td>
+        <td>Any user</td>
+      </tr>
+      <tr>
+        <td>Active</td>
+        <td>The group is operating on this plan. Edits notify all participants.</td>
+        <td>Any user</td>
+      </tr>
+      <tr>
+        <td>Committed</td>
+        <td>A user has booked or confirmed this. Flags change attempts; informational only.</td>
+        <td>Self-declared</td>
+      </tr>
+      <tr>
+        <td>Forked</td>
+        <td>A sub-group is doing something different. Visible alongside main itinerary.</td>
+        <td>Any user</td>
+      </tr>
+      <tr>
+        <td>Archived</td>
+        <td>Removed from the active itinerary. Preserved in audit trail, not deleted.</td>
+        <td>Any user</td>
+      </tr>
+    </table>
+
+    <h3>The fork model</h3>
+    <p>Forks are first-class objects. When a participant or sub-group wants to do something different from the main itinerary, they create a fork — a parallel plan visible alongside the group plan. Forks prevent the main itinerary from becoming a battleground and make divergence visible and legible rather than a confusing side-thread. Forks can rejoin the main itinerary or be promoted to it if the group converges.</p>
+
+    <h3>Proposal promotion</h3>
+    <p>There is no minimum threshold for a proposal to become Active. Any member can promote any proposal at any time. The check on unilateral action is not a gate — it is the fork. If someone promotes a plan the group dislikes, the group routes around it by forking.</p>
+
+    <div class="note-box rationale">
+      <div class="note-label">Design rationale</div>
+      <p>Requiring consensus to advance a proposal creates the same bottleneck the app is designed to dissolve. Low friction to promote; low friction to diverge.</p>
+    </div>
+
+    <h3>Tasks</h3>
+    <p>A task is a named coordination gap — something that needs to happen for the trip to succeed but hasn't been claimed. Tasks are distinct from itinerary items: they represent logistical requirements, not planned activities.</p>
+    <p>Tasks have three key properties: creator (the person who noticed the gap — creating a task confers no obligation to complete it); owner (whoever is responsible — full-access members can self-claim or assign to another full-access member; participant-tier members can only self-claim); and deadline tied to a real-world constraint.</p>
+    <p>As a task's deadline approaches, its visibility increases and triggers a group notification — surfaced to everyone, directed at no one. The social pressure to act exists in the room; the app does not manufacture or direct it.</p>
+
+    <div class="note-box principle">
+      <div class="note-label">Design principle</div>
+      <p>Decoupling observation from obligation is essential. If noticing a gap creates ownership, people stop noticing gaps. The app rewards surfacing problems, not punishes it.</p>
+    </div>
+
+    <h3>The committed flag</h3>
+    <p>When a user has acted on a plan item in the real world — booked a hotel, purchased a ticket — they mark it as Committed. Committed is self-declared and purely informational. The flag warns the group before they change something, explains divergence after a change, and creates a visible record if anyone feels blindsided later.</p>
+
+    <div class="note-box principle">
+      <div class="note-label">Design principle</div>
+      <p>Committed status does not lock an item or prevent changes. It makes the stakes of a change visible so the group can make informed decisions.</p>
+    </div>
+  </section>
+
+  <!-- 4. Features -->
+  <section>
+    <div class="section-eyebrow">04 — Features</div>
+    <h2>Requirements</h2>
+
+    <h4>Trip management</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Users can create, join, and manage multiple trips simultaneously</li>
+        <li>Each trip has an independent group, itinerary, audit trail, and chat</li>
+        <li>Trips are joined via invite link plus a verification code — the link gets you to the door, the code confirms you're expected. Forwarded links alone are not sufficient to join.</li>
+        <li>Trip admin (creator) can remove members and change access tiers; all other permissions are equal</li>
+      </ul>
+    </div>
+
+    <h4>Itinerary</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Shared, real-time itinerary organized by day</li>
+        <li>Anyone can add, edit, or archive items</li>
+        <li>Items display state, author of last edit, and committed count</li>
+        <li>Edits push notifications to all group members</li>
+        <li>Group calendar view showing each day at a glance</li>
+      </ul>
+    </div>
+
+    <h4>Proposals</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Any user can submit a proposal without it becoming a plan</li>
+        <li>Proposals are visible to the group and can be upvoted or commented on</li>
+        <li>Voting is a signal, not a gate — proposals do not require majority approval to advance</li>
+        <li>A proposal advances to Active when any user promotes it; the group can revert it</li>
+      </ul>
+    </div>
+
+    <h4>Forks</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Any user can create a fork from any point in the main itinerary</li>
+        <li>Forks are named and attributed to the initiating user or sub-group</li>
+        <li>Fork members can be a subset of the trip group</li>
+        <li>Open forks are visible to all trip members, even those not participating</li>
+        <li>Private forks show their existence to the group but not their contents or membership — for separation without conflict (e.g. a couple's date night)</li>
+        <li>Forks can be promoted to the main itinerary via proposal, or closed</li>
+      </ul>
+    </div>
+
+    <h4>Tasks</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Any full or participant member can create a task</li>
+        <li>Creating a task does not make the creator responsible for it</li>
+        <li>Tasks show: description, deadline, creator, and current owner (if claimed or assigned)</li>
+        <li>Full-access members can self-claim or assign a task to another full-access member — reflecting agreements made outside the app</li>
+        <li>Participant-tier members can only self-claim. They cannot be assigned tasks by anyone through the app.</li>
+        <li>Unclaimed tasks rise in visibility as their deadline approaches</li>
+        <li>Group notification fires for unclaimed tasks nearing deadline — surfaced to everyone, directed at no one</li>
+        <li>Claimed or assigned tasks can be released by the owner; completed tasks are logged in the audit trail</li>
+      </ul>
+    </div>
+
+    <h4>Chat</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Item-level comments — each itinerary item and task has its own comment thread</li>
+        <li>Trip-level thread — shared space for general group conversation, visible to full and participant members</li>
+        <li>Comments are attributed and timestamped; not editable after posting</li>
+        <li>Chat is not a decision surface — decisions live in the itinerary and task objects</li>
+      </ul>
+    </div>
+
+    <h4>Audit trail</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Every state change, edit, addition, and archival is logged</li>
+        <li>Log entries show: who, what changed, from what, at what time</li>
+        <li>Any item can be restored to a prior state from the trail</li>
+        <li>Audit trail is read-only; it cannot be edited or deleted</li>
+      </ul>
+    </div>
+
+    <h4>Notifications</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Push notifications for: edits to Active items, new proposals, fork creation, committed flag warnings, unclaimed tasks nearing deadline</li>
+        <li>Digest mode available for users who prefer batched updates</li>
+        <li>Notification preferences are per-trip, not global</li>
+      </ul>
+    </div>
+
+    <h4>Child mode and content visibility</h4>
+    <div class="feature-block">
+      <div class="feature-block-title">Two distinct features</div>
+      <ul class="feature-list">
+        <li>Child mode (access tier) — children see a read-only, day-by-day view of Active items only. No proposals, no forks, no tasks, no audit trail, no chat. Enabled per-user by the trip admin.</li>
+        <li>Adult-only flag (content visibility) — any itinerary item, task, or chat thread can be marked adult-only by a full-access member. Items with this flag are invisible to child-tier users — they do not appear as redacted, they simply do not exist in the child view.</li>
+        <li>The flag is set per item, not per day or per trip. Use cases include surprise plans, budget discussions, or any coordination adults want to handle privately.</li>
+      </ul>
+    </div>
+
+    <h4>Access tiers</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Full access — adults. Can propose, edit, fork, vote, create and claim tasks, assign tasks to other full-access members, mark committed, use chat, set adult-only flags, and view the audit trail.</li>
+        <li>Participant access — teenagers. Can view the full itinerary, propose ideas, comment, mark personal commitments, and self-claim tasks. Cannot be assigned tasks by other users under any circumstances. Cannot set adult-only flags.</li>
+        <li>Child access — younger children. Read-only, day-by-day view of Active items only. Adult-only items not visible. No planning functionality.</li>
+        <li>Access tier is set by the trip admin at the time of invite and can be changed at any time.</li>
+      </ul>
+    </div>
+
+    <h4>Authentication and access</h4>
+    <div class="feature-block">
+      <ul class="feature-list">
+        <li>Trip joining requires an invite link plus a verification code — both are required. The link alone is not sufficient.</li>
+        <li>Users authenticate via standard account (email or social login)</li>
+        <li>Trip admin can revoke access for any member at any time</li>
+        <li>Removed members lose access immediately and cannot rejoin without a new invite and code</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5. Design Principles -->
+  <section>
+    <div class="section-eyebrow">05 — Design Principles</div>
+    <h2>What guides every decision</h2>
+
+    <div class="principle-block">
+      <div class="principle-title">Reads are free. Writes are visible. Deletes are slow.</div>
+      <p>Anyone can view anything. Every edit is attributed and notified. Archiving requires confirmation; nothing is permanently removed.</p>
+    </div>
+
+    <div class="principle-block">
+      <div class="principle-title">No voluntelling participants.</div>
+      <p>Participant-tier members — teenagers — cannot be assigned tasks by anyone through the app. Their commitment is always self-declared. Full-access members may assign tasks to each other, reflecting agreements made outside the app — that is coordination, not coercion.</p>
+    </div>
+
+    <div class="principle-block">
+      <div class="principle-title">Visibility over enforcement.</div>
+      <p>The system surfaces coordination information — committed flags, fork visibility, unresolved proposals — rather than forcing resolution. Social accountability does the governance work.</p>
+    </div>
+
+    <div class="principle-block">
+      <div class="principle-title">Forks before conflict.</div>
+      <p>Disagreement about the plan is resolved by forking, not by fighting over a single itinerary. The main itinerary stays clean; divergence is legible rather than suppressed.</p>
+    </div>
+
+    <div class="principle-block">
+      <div class="principle-title">No hidden authority.</div>
+      <p>All participants have equal edit rights. The trip creator has only one additional power: removing members. The system does not privilege any user's edits over another's.</p>
+    </div>
+
+    <div class="principle-block">
+      <div class="principle-title">Intent and commitment are distinct.</div>
+      <p>Proposing something and having acted on it are different states with different implications. The system keeps them separate and makes both visible.</p>
+    </div>
+  </section>
+
+  <!-- 6. Known Tradeoffs -->
+  <section>
+    <div class="section-eyebrow">06 — Known Tradeoffs</div>
+    <h2>What this design accepts</h2>
+    <div class="two-col">
+      <div class="two-col-item">Some proposals may never be resolved. The system does not force decisions.</div>
+      <div class="two-col-item">Coordination may still rely on conversation outside the app. The system complements social negotiation, not replaces it.</div>
+      <div class="two-col-item">Responsibility may still concentrate on proactive users. The system makes imbalance visible but does not redistribute it automatically.</div>
+      <div class="two-col-item">Self-declared committed status can be abused. The system relies on social accountability, not verification.</div>
+      <div class="two-col-item">Forks can proliferate. There is no limit on the number of forks, which could create visual complexity in large groups.</div>
+      <div class="two-col-item">Some tasks may never be claimed. The system surfaces gaps; it does not guarantee they are filled.</div>
+      <div class="two-col-item" style="grid-column: 1 / -1;">Chat and itinerary are separate surfaces. Users may relitigate decisions in chat that are already settled in the itinerary. The system cannot prevent this, only make the itinerary the clear source of truth.</div>
+    </div>
+
+    <div class="note-box rationale" style="margin-top: 20px;">
+      <div class="note-label">Design stance</div>
+      <p>Who Booked This? does not eliminate the social complexity of group travel. It makes coordination failures visible, traceable, and not silently absorbed by one person.</p>
+    </div>
+  </section>
+
+  <!-- 7. Out of Scope -->
+  <section>
+    <div class="section-eyebrow">07 — Out of Scope (v1)</div>
+    <h2>Noted for later</h2>
+    <div class="two-col">
+      <div class="two-col-item">Direct booking integration (flights, hotels, restaurants)</div>
+      <div class="two-col-item">Expense splitting or payment tracking</div>
+      <div class="two-col-item">Map or location-based itinerary views</div>
+      <div class="two-col-item">AI-generated suggestions or recommendations</div>
+      <div class="two-col-item" style="grid-column: 1 / -1;">Public or discoverable trips</div>
+    </div>
+  </section>
+
+  <!-- 8. Monetization -->
+  <section>
+    <div class="section-eyebrow">08 — Monetization</div>
+    <h2>Per-trip pricing</h2>
+    <p>Who Booked This? uses per-trip pricing. The person who creates the trip pays a one-time fee to open it. All other members join and participate for free.</p>
+
+    <div class="mono-block">
+      <p>The trip creator is already the person with the most skin in the game. They initiated the coordination, they're holding the itinerary in their head, and they have the clearest incentive to solve the problem. Asking them to front the cost of the tool is coherent with their existing role.</p>
+      <p>It avoids the integrity problem of selling the app to individual users. A participant who just wants to see the plan and mark one committed item shouldn't have to buy software to do that. The creator subsidizes access for the group — which is, again, how the trip already works.</p>
+      <p>It scales naturally with usage. Someone who organizes one trip a year pays once. Someone who organizes five pays five times. There is no subscription to forget about or cancel.</p>
+    </div>
+
+    <div class="note-box constraint">
+      <div class="note-label">What was ruled out</div>
+      <p>Advertising and data monetization were rejected outright. Who Booked This? is a trusted shared space for family coordination. Introducing ads or third-party data access would contradict the product's core promise. The pricing model should be as legible and trustworthy as the app itself.</p>
+    </div>
+  </section>
+
+  <!-- 9. Success Metrics -->
+  <section>
+    <div class="section-eyebrow">09 — Success Metrics</div>
+    <h2>Measuring coordination, not engagement</h2>
+    <p>The standard metrics — downloads, daily active users, session length — measure reach, not whether the app is doing its actual job. The job is reducing coordination failures and keeping the whole group oriented around a shared plan.</p>
+
+    <h3>Group engagement</h3>
+    <p>The single most important signal: is the organizer the only person making edits? If the wiki is being treated as one person's document rather than a shared surface, the core premise hasn't landed.</p>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Trips where 3+ members edit the itinerary</div>
+        <div class="metric-signal">Shared ownership signal</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Participant-tier members who engage at all</div>
+        <div class="metric-signal">Teenager inclusion signal</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Invited members who join within 48 hours</div>
+        <div class="metric-signal">Onboarding health</div>
+      </div>
+    </div>
+
+    <h3>Coordination health</h3>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Items with committed flags from 2+ members</div>
+        <div class="metric-signal">Plan reached reality</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Proposals advancing to Active without reversion</div>
+        <div class="metric-signal">Group is converging</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Unclaimed tasks claimed before deadline</div>
+        <div class="metric-signal">Gap-surfacing works</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Average members editing per trip</div>
+        <div class="metric-signal">Shared vs single-coordinator ownership</div>
+      </div>
+    </div>
+
+    <h3>Trust signals</h3>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Rate of audit trail access per trip</div>
+        <div class="metric-signal">Accountability is real</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Ratio of item reversions to archives</div>
+        <div class="metric-signal">System working as designed</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Committed flag warnings triggered on edits</div>
+        <div class="metric-signal">Flag providing useful friction</div>
+      </div>
+    </div>
+
+    <div class="note-box rationale" style="margin-top: 20px;">
+      <div class="note-label">The honest success metric</div>
+      <p>After the trip, does anyone remember who booked what — and does the answer match what the app says? If the audit trail is accurate and the committed flags are trustworthy, the product worked.</p>
+    </div>
+
+    <h3>What success does not look like</h3>
+    <p>High session length is not a goal. The app should be fast to check and easy to update. High notification volume is not a goal. Fork proliferation is not a goal — a trip with ten open forks has probably fragmented rather than coordinated.</p>
+  </section>
+
+  <!-- 10. Open Questions -->
+  <section>
+    <div class="section-eyebrow">10 — Open Questions</div>
+    <h2>What needs to be resolved</h2>
+    <div class="two-col">
+      <div class="two-col-item">What is the maximum group size before fork visibility becomes unmanageable?</div>
+      <div class="two-col-item">Can a teenager self-upgrade to full access, or does that require trip admin approval?</div>
+      <div class="two-col-item">How are trip admin rights transferred if the creator leaves the trip?</div>
+      <div class="two-col-item">Should unclaimed tasks that pass their deadline stay visible, or move to an archived state automatically?</div>
+      <div class="two-col-item">Should the adult-only flag be settable by participant-tier users, or full-access only?</div>
+      <div class="two-col-item">How does the app handle multiple family units with genuinely different budgets making decisions about shared expenses?</div>
+      <div class="two-col-item" style="grid-column: 1 / -1;">Is there a maximum number of forks before the UI becomes unreadable? Should forks be collapsible?</div>
+    </div>
+  </section>
+
+  <div class="footer-rule">
+    <span>Who Booked This? — Product Requirements Document v1.6</span>
+    <span>May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

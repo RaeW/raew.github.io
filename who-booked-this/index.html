@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who Booked This? — Rae Wree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1C1B19;
+    --ink-mid: #4A4840;
+    --ink-light: #8A8780;
+    --ink-faint: #C8C5BE;
+    --paper: #FAF8F4;
+    --paper-warm: #F2EFE8;
+    --paper-warmer: #E8E3D8;
+    --accent: #3C3489;
+    --accent-mid: #7F77DD;
+    --accent-light: #EEEDFE;
+    --rule: rgba(28,27,25,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-light);
+    text-decoration: none;
+    margin-bottom: 40px;
+    transition: color .15s;
+  }
+  .back-link:hover { color: var(--ink); }
+
+  /* Header */
+  .header {
+    margin-bottom: 64px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 16px;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(30px, 5vw, 44px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .header-sub {
+    font-size: 16px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    max-width: 560px;
+    margin-bottom: 24px;
+  }
+
+  .header-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: var(--accent-light);
+    color: var(--accent);
+    border: 0.5px solid rgba(60,52,137,0.15);
+  }
+
+  /* Sections */
+  section { margin-bottom: 56px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+
+  /* Primary documents — large cards */
+  .primary-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 500px) { .primary-cards { grid-template-columns: 1fr; } }
+
+  .primary-card {
+    display: block;
+    text-decoration: none;
+    padding: 22px 24px;
+    background: var(--accent-light);
+    border: 0.5px solid rgba(60,52,137,0.2);
+    border-radius: 12px;
+    transition: transform .15s, box-shadow .15s;
+  }
+
+  .primary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(60,52,137,0.12);
+  }
+
+  .primary-card-icon {
+    font-size: 22px;
+    margin-bottom: 10px;
+    display: block;
+  }
+
+  .primary-card-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .primary-card-desc {
+    font-size: 12px;
+    color: var(--accent-mid);
+    line-height: 1.5;
+  }
+
+  /* Artifact grid — smaller cards */
+  .artifact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+  }
+
+  .artifact-card {
+    display: block;
+    text-decoration: none;
+    padding: 14px 16px;
+    background: var(--paper-warm);
+    border: 0.5px solid var(--paper-warmer);
+    border-radius: 10px;
+    transition: border-color .15s, transform .15s;
+  }
+
+  .artifact-card:hover {
+    border-color: var(--ink-faint);
+    transform: translateY(-1px);
+  }
+
+  .artifact-card-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 5px;
+  }
+
+  .artifact-card-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .artifact-card-desc {
+    font-size: 11px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  .footer-rule {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 48px 20px 80px; }
+    section { margin-bottom: 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <a class="back-link" href="../index.html">← Portfolio</a>
+
+  <header class="header">
+    <div class="header-eyebrow">Product Thinking Portfolio · Case Study 01</div>
+    <h1>Who Booked This?</h1>
+    <p class="header-sub">A mobile app for extended family trips — built around the insight that group plans fall apart not from lack of enthusiasm, but from lack of a shared record of what was actually decided.</p>
+    <div class="header-tags">
+      <span class="tag">0→1</span>
+      <span class="tag">Consumer</span>
+      <span class="tag">Mobile</span>
+    </div>
+  </header>
+
+  <!-- Primary documents -->
+  <section>
+    <div class="section-eyebrow">Documents</div>
+    <div class="primary-cards">
+      <a class="primary-card" href="case-study.html">
+        <span class="primary-card-icon">📖</span>
+        <div class="primary-card-title">Case Study</div>
+        <div class="primary-card-desc">Problem, users, key decisions, validation thinking, and success metrics.</div>
+      </a>
+      <a class="primary-card" href="prd.html">
+        <span class="primary-card-icon">📋</span>
+        <div class="primary-card-title">Product Requirements Document</div>
+        <div class="primary-card-desc">Full spec — v1.6. Core model, features, design principles, tradeoffs, monetization.</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Wireframes -->
+  <section>
+    <div class="section-eyebrow">Wireframes</div>
+    <div class="artifact-grid">
+      <a class="artifact-card" href="wireframes/itinerary-day-view.html">
+        <div class="artifact-card-label">Wireframe 1</div>
+        <div class="artifact-card-title">Itinerary day view</div>
+        <div class="artifact-card-desc">The primary screen — Active items, proposals, fork visibility, and urgent tasks in one view.</div>
+      </a>
+      <a class="artifact-card" href="wireframes/item-detail.html">
+        <div class="artifact-card-label">Wireframe 2</div>
+        <div class="artifact-card-title">Item detail</div>
+        <div class="artifact-card-desc">Committed flags, per-item comments, inline audit trail, and state actions.</div>
+      </a>
+      <a class="artifact-card" href="wireframes/proposals-view.html">
+        <div class="artifact-card-label">Wireframe 3</div>
+        <div class="artifact-card-title">Proposals view</div>
+        <div class="artifact-card-desc">All open proposals with vote counts, comment signals, and promotion controls.</div>
+      </a>
+      <a class="artifact-card" href="wireframes/task-board.html">
+        <div class="artifact-card-label">Wireframe 4</div>
+        <div class="artifact-card-title">Task board</div>
+        <div class="artifact-card-desc">Urgent, unclaimed, claimed, and completed tasks — deadline urgency visible at a glance.</div>
+      </a>
+      <a class="artifact-card" href="wireframes/fork-detail.html">
+        <div class="artifact-card-label">Wireframe 5</div>
+        <div class="artifact-card-title">Fork detail</div>
+        <div class="artifact-card-desc">A parallel sub-group plan with its own items, committed flags, and rejoin point.</div>
+      </a>
+      <a class="artifact-card" href="wireframes/create-task.html">
+        <div class="artifact-card-label">Wireframe 6</div>
+        <div class="artifact-card-title">Create task</div>
+        <div class="artifact-card-desc">Noticing a gap — with the no-coercion principle built into the language and defaults.</div>
+      </a>
+      <a class="artifact-card" href="wireframes/member-list.html">
+        <div class="artifact-card-label">Wireframe 7</div>
+        <div class="artifact-card-title">Member list</div>
+        <div class="artifact-card-desc">All three access tiers, activity signals, and the never-joined section.</div>
+      </a>
+      <a class="artifact-card" href="wireframes/child-view.html">
+        <div class="artifact-card-label">Wireframe 8</div>
+        <div class="artifact-card-title">Child view</div>
+        <div class="artifact-card-desc">A completely different visual language — warmer, simpler, emoji-led, nothing to manage.</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Flows -->
+  <section>
+    <div class="section-eyebrow">User Flows</div>
+    <div class="artifact-grid">
+      <a class="artifact-card" href="flows/flow-1-create-trip.html">
+        <div class="artifact-card-label">Flow 1</div>
+        <div class="artifact-card-title">Creating a trip</div>
+        <div class="artifact-card-desc">From opening the app through inviting the group and setting access tiers.</div>
+      </a>
+      <a class="artifact-card" href="flows/flow-2-proposal-to-active.html">
+        <div class="artifact-card-label">Flow 2</div>
+        <div class="artifact-card-title">Proposal to Active</div>
+        <div class="artifact-card-desc">How a proposed item moves to Active — including the fork path when the group disagrees.</div>
+      </a>
+      <a class="artifact-card" href="flows/flow-3-forking.html">
+        <div class="artifact-card-label">Flow 3</div>
+        <div class="artifact-card-title">Forking the itinerary</div>
+        <div class="artifact-card-desc">Creating a fork, running it in parallel, and rejoining the main plan.</div>
+      </a>
+      <a class="artifact-card" href="flows/flow-4-task-lifecycle.html">
+        <div class="artifact-card-label">Flow 4</div>
+        <div class="artifact-card-title">Task lifecycle</div>
+        <div class="artifact-card-desc">From noticing a gap through someone volunteering — and what happens when nobody does.</div>
+      </a>
+    </div>
+  </section>
+
+  <div class="footer-rule">
+    <span>Who Booked This? — Rae Wree</span>
+    <span>May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

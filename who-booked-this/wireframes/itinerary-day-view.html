@@ -1,0 +1,168 @@
+<style>
+.device{width:320px;margin:0 auto;background:var(--color-background-secondary);border-radius:32px;padding:12px;border:0.5px solid var(--color-border-secondary)}
+.screen{background:var(--color-background-primary);border-radius:24px;overflow:hidden;min-height:620px}
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 4px;font-size:11px;color:var(--color-text-tertiary)}
+.nav-bar{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 10px}
+.nav-title{font-size:15px;font-weight:500;color:var(--color-text-primary)}
+.nav-sub{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
+.nav-icons{display:flex;gap:14px;color:var(--color-text-secondary);font-size:18px}
+.day-strip{display:flex;gap:6px;padding:0 14px 12px;overflow:hidden}
+.day-pill{display:flex;flex-direction:column;align-items:center;padding:6px 10px;border-radius:12px;border:0.5px solid var(--color-border-tertiary);font-size:11px;color:var(--color-text-secondary);min-width:38px}
+.day-pill.active{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}
+.day-pill .d-num{font-size:15px;font-weight:500;margin-top:1px}
+.day-pill.active .d-num{color:#3C3489}
+.section-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);padding:0 14px 6px;letter-spacing:.04em;text-transform:uppercase}
+.item-card{margin:0 14px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:10px 12px;background:var(--color-background-primary)}
+.item-card.committed{border-left:3px solid #1D9E75;border-radius:0 12px 12px 0}
+.item-card.forked{border-left:3px solid #7F77DD;border-radius:0 12px 12px 0}
+.item-card.proposed{background:var(--color-background-secondary)}
+.item-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.item-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+.item-meta{font-size:11px;color:var(--color-text-secondary)}
+.state-badge{font-size:10px;padding:2px 7px;border-radius:8px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+.state-active{background:#E1F5EE;color:#085041}
+.state-proposed{background:#F1EFE8;color:#5F5E5A}
+.state-committed{background:#E1F5EE;color:#085041;font-weight:500}
+.state-forked{background:#EEEDFE;color:#3C3489}
+.item-footer{display:flex;align-items:center;gap:8px;margin-top:6px}
+.commit-flag{display:flex;align-items:center;gap:3px;font-size:10px;color:#0F6E56}
+.fork-flag{display:flex;align-items:center;gap:3px;font-size:10px;color:#534AB7}
+.task-strip{margin:0 14px 8px;border:0.5px solid var(--color-border-secondary);border-radius:12px;padding:8px 12px;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:space-between}
+.task-urgent{border-color:#EF9F27;background:#FAEEDA}
+.task-label{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.task-sub{font-size:10px;color:var(--color-text-secondary);margin-top:1px}
+.task-urgent .task-label{color:#633806}
+.task-urgent .task-sub{color:#854F0B}
+.unclaimed-pill{font-size:10px;padding:2px 7px;border-radius:8px;background:#F1EFE8;color:#5F5E5A}
+.urgent-pill{font-size:10px;padding:2px 7px;border-radius:8px;background:#FAC775;color:#633806}
+.fab{position:relative;margin:12px 14px 0;display:flex;justify-content:flex-end}
+.fab-btn{background:#534AB7;color:#EEEDFE;border:none;border-radius:20px;padding:8px 16px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px;cursor:pointer}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:8px 14px}
+.fork-header{display:flex;align-items:center;gap:6px;padding:4px 14px 6px}
+.fork-dot{width:8px;height:8px;border-radius:50%;background:#7F77DD;flex-shrink:0}
+.fork-label{font-size:11px;color:#534AB7;font-weight:500}
+</style>
+
+<h2 class="sr-only">Low-fidelity wireframe of the Itinerary day view screen in Who Booked This?</h2>
+
+<div class="device">
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div style="display:flex;gap:4px;align-items:center">
+        <i class="ti ti-wifi" style="font-size:13px" aria-hidden="true"></i>
+        <i class="ti ti-battery-2" style="font-size:13px" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <div>
+        <div class="nav-title">Yellowstone Trip</div>
+        <div class="nav-sub">Jun 14 – Jun 21 · 7 people</div>
+      </div>
+      <div class="nav-icons">
+        <i class="ti ti-bell" aria-hidden="true"></i>
+        <i class="ti ti-users" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <div class="day-strip">
+      <div class="day-pill"><span>Sat</span><span class="d-num">14</span></div>
+      <div class="day-pill active"><span>Sun</span><span class="d-num">15</span></div>
+      <div class="day-pill"><span>Mon</span><span class="d-num">16</span></div>
+      <div class="day-pill"><span>Tue</span><span class="d-num">17</span></div>
+      <div class="day-pill"><span>Wed</span><span class="d-num">18</span></div>
+    </div>
+
+    <div class="section-label">Sunday, Jun 15</div>
+
+    <div class="item-card committed">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Old Faithful — 10:30am</div>
+          <div class="item-meta">Meet at visitor center</div>
+        </div>
+        <span class="state-badge state-active">Active</span>
+      </div>
+      <div class="item-footer">
+        <i class="ti ti-check" style="font-size:12px;color:#0F6E56" aria-hidden="true"></i>
+        <span class="commit-flag">3 committed</span>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Lunch at Canyon Lodge</div>
+          <div class="item-meta">1:00pm · reservation needed</div>
+        </div>
+        <span class="state-badge state-active">Active</span>
+      </div>
+      <div class="item-footer">
+        <span style="font-size:10px;color:var(--color-text-tertiary)">No one committed yet</span>
+      </div>
+    </div>
+
+    <div class="item-card proposed">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Evening boat tour</div>
+          <div class="item-meta">Proposed by Aunt Rita · 4 upvotes</div>
+        </div>
+        <span class="state-badge state-proposed">Proposed</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="fork-header">
+      <div class="fork-dot"></div>
+      <span class="fork-label">Fork — Museum crew (3 people)</span>
+    </div>
+
+    <div class="item-card forked">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Natural History Museum — 11am</div>
+          <div class="item-meta">Sarah, Marcus, Lily</div>
+        </div>
+        <span class="state-badge state-forked">Forked</span>
+      </div>
+      <div class="item-footer">
+        <i class="ti ti-check" style="font-size:12px;color:#534AB7" aria-hidden="true"></i>
+        <span class="fork-flag">2 committed</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label" style="padding-top:4px">Tasks needing someone</div>
+
+    <div class="task-strip task-urgent">
+      <div>
+        <div class="task-label">Return rental van</div>
+        <div class="task-sub">Due Sun 15 by 10am · created by Dad</div>
+      </div>
+      <span class="urgent-pill">Unclaimed</span>
+    </div>
+
+    <div class="task-strip">
+      <div>
+        <div class="task-label">Pick up snack order</div>
+        <div class="task-sub">Due Sun 15 by noon</div>
+      </div>
+      <span class="unclaimed-pill">Unclaimed</span>
+    </div>
+
+    <div class="fab">
+      <button class="fab-btn" onclick="sendPrompt('Show me a wireframe of the Add Item screen for Who Booked This?')">
+        <i class="ti ti-plus" aria-hidden="true"></i> Add to day
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:1.5rem 0 0;font-size:11px;color:var(--color-text-secondary)">
+  <div style="border-left:3px solid #1D9E75;padding-left:8px">Green left border = someone is committed to this item</div>
+  <div style="border-left:3px solid #7F77DD;padding-left:8px">Purple left border = forked item, not on main itinerary</div>
+  <div style="border-left:3px solid #EF9F27;padding-left:8px;color:#854F0B">Amber task card = deadline is approaching, still unclaimed</div>
+</div>

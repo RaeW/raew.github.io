@@ -1,0 +1,120 @@
+<style>
+.device{width:320px;margin:0 auto;background:var(--color-background-secondary);border-radius:32px;padding:12px;border:0.5px solid var(--color-border-secondary)}
+.screen{background:var(--color-background-primary);border-radius:24px;overflow:hidden;min-height:620px}
+.status-bar{display:flex;justify-content:space-between;align-items:center;padding:10px 16px 4px;font-size:11px;color:var(--color-text-tertiary)}
+.nav-bar{display:flex;align-items:center;gap:10px;padding:6px 14px 10px}
+.nav-back{font-size:13px;color:#534AB7;display:flex;align-items:center;gap:3px}
+.nav-title{font-size:15px;font-weight:500;color:var(--color-text-primary);flex:1}
+.fork-hero{padding:10px 14px 12px;background:#F3F1FD;border-bottom:0.5px solid #D4D0F5}
+.fork-label{display:flex;align-items:center;gap:6px;margin-bottom:4px}
+.fork-dot{width:8px;height:8px;border-radius:50%;background:#7F77DD;flex-shrink:0}
+.fork-name{font-size:16px;font-weight:600;color:#3C3489}
+.fork-meta{font-size:12px;color:#534AB7;margin-bottom:8px}
+.member-row{display:flex;gap:-4px;align-items:center}
+.avatar-sm{width:26px;height:26px;border-radius:50%;background:#EEEDFE;border:1.5px solid #FFFFFF;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:500;color:#3C3489;margin-right:-6px}
+.member-label{font-size:11px;color:#534AB7;margin-left:14px}
+.fork-actions{display:flex;gap:6px;margin-top:10px}
+.fork-btn{flex:1;padding:6px 0;border-radius:8px;font-size:11px;font-weight:500;border:0.5px solid #AFA9EC;background:#FFFFFF;color:#534AB7;cursor:pointer;text-align:center}
+.fork-btn.primary{background:#534AB7;color:#EEEDFE;border-color:#534AB7}
+.section-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);padding:10px 14px 4px;letter-spacing:.04em;text-transform:uppercase}
+.item-card{margin:0 14px 8px;border:0.5px solid #D4D0F5;border-left:3px solid #7F77DD;border-radius:0 12px 12px 0;padding:10px 12px;background:var(--color-background-primary);cursor:pointer}
+.item-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+.item-meta{font-size:11px;color:var(--color-text-secondary)}
+.item-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.badge{font-size:10px;padding:2px 7px;border-radius:8px}
+.b-forked{background:#EEEDFE;color:#3C3489}
+.b-active{background:#E1F5EE;color:#085041}
+.item-footer{display:flex;align-items:center;gap:6px;margin-top:6px}
+.commit-flag{display:flex;align-items:center;gap:3px;font-size:10px;color:#534AB7}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:4px 14px}
+.main-peek{margin:0 14px 8px;border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:8px 12px;background:var(--color-background-secondary)}
+.main-peek-label{font-size:10px;color:var(--color-text-tertiary);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.main-peek-item{font-size:12px;color:var(--color-text-secondary)}
+.rejoin-btn{display:flex;align-items:center;justify-content:center;margin:0 14px 12px;padding:8px;border:0.5px dashed #AFA9EC;border-radius:10px;font-size:12px;color:#534AB7;cursor:pointer;background:transparent;width:calc(100% - 28px)}
+.fab{display:flex;justify-content:flex-end;padding:4px 14px 12px}
+.fab-btn{background:#534AB7;color:#EEEDFE;border:none;border-radius:20px;padding:8px 16px;font-size:12px;font-weight:500;display:flex;align-items:center;gap:6px;cursor:pointer}
+</style>
+
+<div class="device">
+  <div class="screen">
+    <div class="status-bar"><span>9:41</span><div style="display:flex;gap:4px"><i class="ti ti-wifi" style="font-size:13px"></i><i class="ti ti-battery-2" style="font-size:13px"></i></div></div>
+
+    <div class="nav-bar">
+      <span class="nav-back"><i class="ti ti-chevron-left"></i> Forks</span>
+      <span style="flex:1"></span>
+    </div>
+
+    <div class="fork-hero">
+      <div class="fork-label">
+        <div class="fork-dot"></div>
+        <div class="fork-name">Museum crew</div>
+      </div>
+      <div class="fork-meta">Forked from Sun Jun 15 · started by Sarah</div>
+      <div class="member-row">
+        <div class="avatar-sm">S</div>
+        <div class="avatar-sm">M</div>
+        <div class="avatar-sm">L</div>
+        <span class="member-label">Sarah, Marcus, Lily</span>
+      </div>
+      <div class="fork-actions">
+        <button class="fork-btn" onclick="sendPrompt('What does joining a fork do in Who Booked This?')">Join this fork</button>
+        <button class="fork-btn primary" onclick="sendPrompt('How do I merge a fork back into the main itinerary?')">Merge to main</button>
+      </div>
+    </div>
+
+    <div class="section-label">Fork itinerary — Jun 15</div>
+
+    <div class="item-card" onclick="sendPrompt('Show item detail for Natural History Museum in fork')">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Natural History Museum</div>
+          <div class="item-meta">11:00am · meet at front entrance</div>
+        </div>
+        <span class="badge b-forked">Forked</span>
+      </div>
+      <div class="item-footer">
+        <i class="ti ti-check" style="font-size:12px;color:#534AB7"></i>
+        <span class="commit-flag">2 committed</span>
+      </div>
+    </div>
+
+    <div class="item-card">
+      <div class="item-row">
+        <div>
+          <div class="item-title">Lunch at Museum Café</div>
+          <div class="item-meta">1:30pm · no reservation needed</div>
+        </div>
+        <span class="badge b-forked">Forked</span>
+      </div>
+      <div class="item-footer">
+        <span style="font-size:10px;color:var(--color-text-tertiary)">No one committed yet</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-label">Rejoins main plan</div>
+
+    <div class="main-peek">
+      <div class="main-peek-label">Back with the group at</div>
+      <div class="main-peek-item">🍽 Dinner at Firehole — 6:30pm (Active)</div>
+    </div>
+
+    <button class="rejoin-btn" onclick="sendPrompt('How do I add a rejoin point to a fork in Who Booked This?')">
+      <i class="ti ti-git-merge" style="font-size:14px;margin-right:6px"></i> Add rejoining point
+    </button>
+
+    <div class="fab">
+      <button class="fab-btn" onclick="sendPrompt('How do I add an item to a fork in Who Booked This?')">
+        <i class="ti ti-plus"></i> Add to fork
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:1.5rem 0 0;font-size:11px;color:var(--color-text-secondary)">
+  <div style="border-left:3px solid #7F77DD;padding-left:8px">The fork has its own hero section — named, attributed, members shown. It's a first-class object, not a footnote.</div>
+  <div style="border-left:3px solid #534AB7;padding-left:8px">The "Rejoins main plan" section shows where the fork converges back. The main itinerary item is visible from inside the fork.</div>
+  <div style="border-left:3px solid #1D9E75;padding-left:8px">"Join this fork" is available to anyone — forks are open by default. The group can see where everyone is.</div>
+  <div style="border-left:3px solid #AFA9EC;padding-left:8px">"Merge to main" promotes the fork's items back to the main itinerary — for when the rogue plan turns out to be the one everyone wanted.</div>
+</div>

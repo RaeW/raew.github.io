@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heirloom — Case Study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1C1B19;
+    --ink-mid: #4A4840;
+    --ink-light: #8A8780;
+    --ink-faint: #C8C5BE;
+    --paper: #FAF8F4;
+    --paper-warm: #F2EFE8;
+    --paper-warmer: #E8E3D8;
+    --accent: #C9523A;
+    --accent-mid: #E07B65;
+    --accent-light: #F5EDE8;
+    --green: #085041;
+    --green-light: #E1F5EE;
+    --amber: #633806;
+    --amber-light: #FAEEDA;
+    --rule: rgba(28,27,25,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 72px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .header-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    max-width: 560px;
+    margin-bottom: 28px;
+  }
+
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+
+  .meta-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .meta-value {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink-mid);
+  }
+
+  /* TL;DR */
+  .tldr {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin-bottom: 64px;
+  }
+
+  .tldr-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+
+  .tldr ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+  .tldr li {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1.5;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .tldr li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent-mid);
+    font-size: 12px;
+  }
+
+  /* Sections */
+  section { margin-bottom: 64px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Lora', serif;
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--ink);
+    margin: 36px 0 12px;
+  }
+
+  p {
+    color: var(--ink-mid);
+    margin-bottom: 16px;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  /* Pullquote */
+  .pullquote {
+    margin: 40px 0;
+    padding: 0 0 0 24px;
+    border-left: 2px solid var(--accent-mid);
+  }
+
+  .pullquote p {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.55;
+  }
+
+  /* User cards */
+  .user-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0;
+  }
+
+  @media (max-width: 540px) { .user-grid { grid-template-columns: 1fr; } }
+
+  .user-card {
+    background: var(--paper-warm);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+
+  .user-card-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .user-card-desc {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  /* Decision blocks */
+  .decision {
+    margin: 48px 0;
+    padding: 28px 32px;
+    background: var(--paper-warm);
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .decision-number {
+    position: absolute;
+    top: -14px;
+    left: 28px;
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .decision h3 {
+    margin-top: 8px;
+    font-style: normal;
+    font-size: 17px;
+    color: var(--ink);
+  }
+
+  .decision p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .decision-evolution {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--paper-warmer);
+  }
+
+  .decision-evolution-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+  }
+
+  .decision-evolution p {
+    font-size: 14px;
+    color: var(--ink-mid);
+    font-style: italic;
+  }
+
+  /* Assumption / risk */
+  .assumption-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0;
+  }
+
+  @media (max-width: 540px) { .assumption-row { grid-template-columns: 1fr; } }
+
+  .assumption-box {
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .assumption-box.assumption {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent-mid);
+  }
+
+  .assumption-box.risk {
+    background: var(--amber-light);
+    border-left: 3px solid #EF9F27;
+  }
+
+  .assumption-box-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .assumption-box.assumption .assumption-box-label { color: var(--accent); }
+  .assumption-box.risk .assumption-box-label { color: var(--amber); }
+  .assumption-box.assumption p { color: var(--accent); margin: 0; }
+  .assumption-box.risk p { color: var(--amber); margin: 0; }
+
+  /* Validation cards */
+  .validation-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 540px) { .validation-grid { grid-template-columns: 1fr; } }
+
+  .validation-card {
+    background: var(--paper-warm);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .validation-card-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 6px;
+  }
+
+  .validation-card p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    margin: 0;
+  }
+
+  /* V2 list */
+  .v2-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 540px) { .v2-grid { grid-template-columns: 1fr; } }
+
+  .v2-item {
+    padding: 12px 14px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.55;
+  }
+
+  /* Artifacts */
+  .artifact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .artifact-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--paper-warm);
+    border-radius: 8px;
+  }
+
+  .artifact-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .artifact-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .artifact-desc {
+    font-size: 12px;
+    color: var(--ink-light);
+    line-height: 1.4;
+  }
+
+  /* Note box */
+  .note-box {
+    margin: 20px 0;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .note-box.principle {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent-mid);
+  }
+
+  .note-box.principle p { color: var(--accent); margin: 0; }
+
+  .note-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    color: var(--accent);
+  }
+
+  /* Footer */
+  .footer-rule {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    .page { padding: 48px 20px 80px; }
+    section { margin-bottom: 48px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-eyebrow">Product Thinking Portfolio · Case Study 02</div>
+    <h1>Heirloom</h1>
+    <p class="header-sub">A mobile app that rescues your stranded recipes — bringing them to your phone and surfacing them when you're ready to cook.</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Type</span>
+        <span class="meta-value">0→1 concept</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Platform</span>
+        <span class="meta-value">Mobile (iOS-first)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Context</span>
+        <span class="meta-value">Consumer / B2C</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Deliverables</span>
+        <span class="meta-value">PRD, flows, wireframes</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- TL;DR -->
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <ul>
+      <li>Recipes don't get cooked because they never rise to the top of consideration — not because they're hard to find</li>
+      <li>Heirloom rescues stranded recipes via import, then actively surfaces them at the moment you're ready to cook</li>
+      <li>Two distinct users — the digital archivist and the keeper of cards — have the same problem but very different emotional stakes</li>
+      <li>Three decisions evolved significantly during design; the product got sharper through questioning, not despite it</li>
+    </ul>
+  </div>
+
+  <!-- The Problem -->
+  <section>
+    <div class="section-eyebrow">01 — The Problem</div>
+    <h2>The Chantilly cake I've never made again</h2>
+    <p>I have a Whole Foods Chantilly cake recipe saved on my computer, with my own notes on it. I've never made it again. By the time I'm in the kitchen with my phone, finding that file is more friction than just searching online — and the version I find isn't mine. So I watch a YouTube video instead, and the Chantilly cake sits on my desktop for another year.</p>
+    <p>I started designing this product thinking the barrier was retrieval. The file is in the wrong place — get it to my phone and I'll cook it. That's a reasonable hypothesis. It turned out to be wrong, or at least incomplete.</p>
+
+    <div class="pullquote">
+      <p>The Chantilly cake doesn't get made not because I can't find it. It never rises to the top of consideration.</p>
+    </div>
+
+    <p>I'm not standing in the kitchen thinking "I want to make Chantilly cake but I can't find the recipe." I'm standing in the kitchen thinking "what should I make?" — and the Chantilly cake never enters the answer. That's a discovery problem. Getting the recipe onto my phone is a necessary precondition, but it doesn't solve the problem on its own.</p>
+    <p>This realization came mid-process, through stress-testing my own assumptions. It changed what the product is. Import became the foundation. Re-engagement became the actual product.</p>
+  </section>
+
+  <!-- Who It's For -->
+  <section>
+    <div class="section-eyebrow">02 — Who It's For</div>
+    <h2>The same problem, very different recipes</h2>
+    <p>Two users. Both have a collection of recipes they love but rarely cook from. Both default to whatever's easiest instead. The similarity ends there.</p>
+
+    <div class="user-grid">
+      <div class="user-card">
+        <div class="user-card-name">The digital archivist</div>
+        <div class="user-card-desc">Years of recipes saved as PDFs, Word docs, and text files — on a desktop, in a downloads folder, maybe in email attachments. The barrier is steps: getting the file from computer to kitchen requires too many of them. Imports in bulk. Emotionally attached to her own annotated versions of recipes, not the originals.</div>
+      </div>
+      <div class="user-card">
+        <div class="user-card-name">The keeper of cards</div>
+        <div class="user-card-desc">A shoebox or binder of recipe cards — some in her own handwriting, some in a parent's or grandparent's. Deeply attached to them. The barrier is physical: the cards live in a drawer, not the kitchen. Imports one at a time, deliberately. Each import is a small act of preservation, not a bulk transfer.</div>
+      </div>
+    </div>
+
+    <p>The distinction matters for more than just import path. The keeper of cards is the more emotionally invested user. If parsing fails on a handwritten card scan — and it will, more often than on a clean PDF — she's not having a software inconvenience. She's watching the app struggle with something in her grandmother's handwriting. The correction experience needs to feel like collaboration, not error recovery.</p>
+  </section>
+
+  <!-- Three Decisions -->
+  <section>
+    <div class="section-eyebrow">03 — Key Decisions</div>
+    <h2>Three things that changed during design</h2>
+    <p>I'm including the evolution here deliberately. These decisions didn't arrive fully formed — they got sharper through questioning. That process is part of what I want to show.</p>
+
+    <div class="decision">
+      <div class="decision-number">Decision 01</div>
+      <h3>Re-engagement is the product, not a feature</h3>
+      <p>The original framing was a retrieval app: import your recipes, find them easily, cook them. The import is the product. Everything else is secondary.</p>
+      <p>Stress-testing that assumption revealed the flaw. Import solves the access problem. It doesn't solve the consideration problem. A library full of rescued recipes on your phone still sits unused if the app doesn't bring the right recipe to the surface at the right moment.</p>
+      <p>Heirloom's re-engagement layer — ingredient search, "you haven't made this in a while" surfacing, recipes never cooked rising to the top — isn't a nice-to-have sitting on top of an import utility. It's the mechanism that actually changes cooking behavior. Without it, the product has solved the wrong problem.</p>
+      <div class="decision-evolution">
+        <div class="decision-evolution-label">How this evolved</div>
+        <p>The original PRD buried ingredient search in the features list as one item among many. Recognizing re-engagement as the core mechanism promoted it to its own section and changed how the home screen is designed — the app opens with a reason to cook, not a catalogue to browse.</p>
+      </div>
+    </div>
+
+    <div class="decision">
+      <div class="decision-number">Decision 02</div>
+      <h3>Unified search, discovered late</h3>
+      <p>The original design had ingredient search as the primary search surface. Type what you have on hand, find a recipe. That's a strong re-engagement feature. It also completely missed the case where you know what you want to make.</p>
+      <p>If I want to make Chantilly cake, I don't want to remember it uses apricot jam and almond extract. I want to type "Chantilly" and find it. The original design made that impossible — there was no recipe name search at all.</p>
+      <p>The solution is unified search: one search surface that handles both intents without asking the user to declare upfront which one they have. Type "chicken" and get both recipe name matches and ingredient matches in grouped results. The user self-selects. A user who came looking for Mom's Chicken Soup might notice they can also make Roasted Pepper Chicken with what's already in the fridge — re-engagement happening incidentally, which is the best kind.</p>
+      <div class="decision-evolution">
+        <div class="decision-evolution-label">How this evolved</div>
+        <p>This gap wasn't in the original design at all. It was found by asking "what mode are users in when they open the app?" — and realizing the answer was sometimes "I already know what I want to make," which the product had no answer for. The PRD, wireframe, and bottom navigation were all updated after this was caught.</p>
+      </div>
+    </div>
+
+    <div class="decision">
+      <div class="decision-number">Decision 03</div>
+      <h3>The correction experience is user-specific</h3>
+      <p>The correction wireframe — inline editing, wavy underline on uncertain ingredients, accept-all always available — is designed to feel like spell-check rather than error recovery. Fast, forgiving, not mandatory. That's the right design for the digital archivist correcting a clean PDF that parsed at 87%.</p>
+      <p>It's a different experience for the keeper of cards correcting a scan of a faded, handwritten recipe card. For her, high correction rates aren't a product failure — they're an accurate reflection of difficult input. The framing of correction needs to match that reality. "We got most of Grandma's recipe — help us fill in the rest" is a different message than "2 ingredients need review."</p>
+      <p>The app knows which input type it received. A photo capture of a handwritten source is a different signal than a PDF upload. In v1 the correction experience is one-size-fits-all. That's a known limitation, not an oversight.</p>
+      <div class="decision-evolution">
+        <div class="decision-evolution-label">How this evolved</div>
+        <p>This distinction emerged from asking what the correction experience means emotionally for each user, not just functionally. The onboarding flow was also revised during this process — it originally had no failure recovery path for a completely unparseable import. The first import failing silently is the highest-risk moment in the product. It now triggers guided retry immediately, not a queue.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What I'd Validate -->
+  <section>
+    <div class="section-eyebrow">04 — What I'd Validate</div>
+    <h2>The assumptions I'm watching most carefully</h2>
+
+    <h3>On re-engagement: does surfacing change what people cook?</h3>
+    <div class="assumption-row">
+      <div class="assumption-box assumption">
+        <div class="assumption-box-label">The bet</div>
+        <p>Surfacing recipes by ingredient and by recency changes cooking behavior — people reach for recipes they love but stopped making.</p>
+      </div>
+      <div class="assumption-box risk">
+        <div class="assumption-box-label">The risk</div>
+        <p>Some recipes were saved out of mild curiosity, not genuine intent. Bulk import fills the library with noise that dilutes the signal and makes surfacing feel random.</p>
+      </div>
+    </div>
+    <div class="validation-grid">
+      <div class="validation-card">
+        <div class="validation-card-label">What I'd measure</div>
+        <p>Rate of recipe opens via re-engagement strip versus direct library navigation. If users ignore the strip and go straight to library, it isn't doing its job.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">What I'd measure</div>
+        <p>Recipes cooked at least once, segmented by import method. Keeper of cards recipes may have higher cook rates than bulk-imported files — the intentionality of import matters.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">V1 success definition</div>
+        <p>Users engage with the app and cook from it, even if not every recipe gets made. A library with some dormant recipes is fine. A library nobody cooks from is not.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">V2 hypothesis</div>
+        <p>Behavior-based surfacing that learns which recipes actually matter to each user reduces the noise from bulk import and makes re-engagement feel personal rather than generic.</p>
+      </div>
+    </div>
+
+    <h3>On parsing: how many corrections is too many?</h3>
+    <div class="assumption-row">
+      <div class="assumption-box assumption">
+        <div class="assumption-box-label">The bet</div>
+        <p>The correction experience is fast and forgiving enough that users don't quit after their first failure. One or two corrections feels like collaboration, not work.</p>
+      </div>
+      <div class="assumption-box risk">
+        <div class="assumption-box-label">The risk</div>
+        <p>Correction tolerance scales badly. Five corrections on one recipe feels like the app didn't do its job. The keeper of cards scanning handwritten cards will see higher correction rates than the digital archivist — measuring them together masks the signal.</p>
+      </div>
+    </div>
+    <div class="validation-grid">
+      <div class="validation-card">
+        <div class="validation-card-label">What I'd measure</div>
+        <p>Correction rate segmented by import type — photo capture vs. file upload. A high correction rate on handwritten card scans may be expected and acceptable. The same rate on PDF uploads is a parsing failure.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">What I'd watch for</div>
+        <p>Keeper of cards retention after first correction. If she quits, the tone was wrong — not the correction count. This is a qualitative signal that retention numbers alone won't surface.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">Known v1 limitation</div>
+        <p>The correction screen speaks to both users the same way. Input-aware framing — warmer and more collaborative for handwritten scans — is a v2 refinement.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">Core assumption to test</div>
+        <p>The effort of correction is worth it even when corrections are required. If users who correct recipes cook from them at the same rate as users whose recipes parsed cleanly, the correction experience is working.</p>
+      </div>
+    </div>
+
+    <h3>On unified search: does it change how people navigate?</h3>
+    <div class="assumption-row">
+      <div class="assumption-box assumption">
+        <div class="assumption-box-label">The bet</div>
+        <p>Showing both recipe name and ingredient results for ambiguous queries serves both user intents without forcing an upfront choice — and creates incidental re-engagement moments.</p>
+      </div>
+      <div class="assumption-box risk">
+        <div class="assumption-box-label">The risk</div>
+        <p>Mixed results feel noisy rather than useful. Users who know what they want to make find ingredient results irrelevant. Users in open-question mode find recipe name results distracting.</p>
+      </div>
+    </div>
+    <div class="validation-grid">
+      <div class="validation-card">
+        <div class="validation-card-label">What I'd measure</div>
+        <p>Which result type users tap more often — recipe name or ingredient — and whether that varies by time of day. "What can I make tonight?" is a different mode than Sunday afternoon recipe planning.</p>
+      </div>
+      <div class="validation-card">
+        <div class="validation-card-label">Hypothesis to test</div>
+        <p>If ingredient results are almost never tapped from ambiguous queries, a name-first search with ingredient search as a secondary mode may be less noisy and equally useful.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- V2 -->
+  <section>
+    <div class="section-eyebrow">05 — What V2 Solves</div>
+    <h2>Known limitations and where they go</h2>
+    <p>V1 establishes the foundation: import works, the library is built, basic re-engagement is in place, signal is accumulating. These are the limitations V1 accepts consciously, with a clear rationale for why they belong in V2.</p>
+    <div class="v2-grid">
+      <div class="v2-item"><strong style="color:var(--ink)">Behavior-based surfacing.</strong> The re-engagement layer learns which recipes matter to each user over time, reducing noise from bulk import.</div>
+      <div class="v2-item"><strong style="color:var(--ink)">Input-aware correction framing.</strong> The correction screen adapts its language for handwritten card scans versus typed document imports.</div>
+      <div class="v2-item"><strong style="color:var(--ink)">Export and backup.</strong> Full library export for device migration. Losing digitized versions of recipes in a grandmother's handwriting is unacceptable in a mature product.</div>
+      <div class="v2-item"><strong style="color:var(--ink)">Desktop bulk import surface.</strong> Whether a separate web app or a mobile-native solution, the architectural decision for folder-level import is unresolved in V1.</div>
+      <div class="v2-item"><strong style="color:var(--ink)">Recipe scaling.</strong> Adjust quantities for different serving sizes.</div>
+      <div class="v2-item"><strong style="color:var(--ink)">Voice recognition.</strong> Hands-free step navigation for when your hands are covered in flour.</div>
+    </div>
+  </section>
+
+  <!-- Artifacts -->
+  <section>
+    <div class="section-eyebrow">06 — Deliverables</div>
+    <h2>What's in this case study</h2>
+    <div class="artifact-list">
+      <div class="artifact-row">
+        <div class="artifact-icon">📋</div>
+        <div>
+          <div class="artifact-name">Product Requirements Document</div>
+          <div class="artifact-desc">Full spec v1.2 — updated through three rounds of revision as design decisions evolved. Includes open architectural questions and known v1 limitations.</div>
+        </div>
+      </div>
+      <div class="artifact-row">
+        <div class="artifact-icon">🔀</div>
+        <div>
+          <div class="artifact-name">User Flows (4)</div>
+          <div class="artifact-desc">Onboarding and first import · Bulk import · Ingredient search to cooking · Manual correction lifecycle</div>
+        </div>
+      </div>
+      <div class="artifact-row">
+        <div class="artifact-icon">📐</div>
+        <div>
+          <div class="artifact-name">Wireframes (5)</div>
+          <div class="artifact-desc">Home screen · Unified search · Photo capture import · Manual correction · Cooking step view</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-rule">
+    <span>Heirloom — Product Thinking Portfolio</span>
+    <span>May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

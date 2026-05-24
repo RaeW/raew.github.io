@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Heirloom — Wireframe: Manual Correction</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #F5F0E8;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+  }
+
+  .page-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #9A8F7F;
+    margin-bottom: 24px;
+  }
+
+  .device {
+    width: 320px;
+    background: #E8E0D4;
+    border-radius: 44px;
+    padding: 12px;
+    border: 0.5px solid #C8BFB0;
+    box-shadow: 0 8px 32px rgba(80,60,40,0.12);
+  }
+
+  .screen {
+    background: #FBF8F3;
+    border-radius: 34px;
+    overflow: hidden;
+    min-height: 640px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .status-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 18px 4px;
+    font-size: 11px;
+    color: #9A8F7F;
+  }
+
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 16px 8px;
+  }
+
+  .nav-skip {
+    font-size: 13px;
+    color: #9A8F7F;
+  }
+
+  .nav-title {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #3D2B1F;
+  }
+
+  .nav-accept {
+    font-size: 13px;
+    color: #C9523A;
+    font-weight: 500;
+  }
+
+  /* Progress */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px 10px;
+  }
+
+  .progress-bar-wrap {
+    flex: 1;
+    height: 3px;
+    background: #EDE5D8;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 3px;
+    background: #C9523A;
+    border-radius: 2px;
+    width: 33%;
+  }
+
+  .progress-label {
+    font-size: 11px;
+    color: #9A8F7F;
+  }
+
+  /* Notice */
+  .notice {
+    margin: 0 14px 12px;
+    padding: 10px 12px;
+    background: #FAEEDA;
+    border-radius: 10px;
+    border-left: 3px solid #EF9F27;
+  }
+
+  .notice-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #633806;
+    margin-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .notice-body {
+    font-size: 11px;
+    color: #7A5020;
+    line-height: 1.5;
+  }
+
+  /* Recipe title */
+  .recipe-title {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #3D2B1F;
+    padding: 0 16px 12px;
+  }
+
+  /* Section */
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: #9A8F7F;
+    padding: 0 14px 6px;
+  }
+
+  /* Ingredient rows */
+  .ingredient-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-bottom: 0.5px solid #EDE5D8;
+  }
+
+  .ing-status {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .ing-ok { background: #E1F5EE; color: #085041; }
+  .ing-uncertain { background: #FAEEDA; color: #633806; }
+
+  .ing-text { flex: 1; }
+
+  .ing-name {
+    font-size: 13px;
+    color: #3D2B1F;
+    line-height: 1.3;
+  }
+
+  .ing-name.uncertain {
+    text-decoration: underline;
+    text-decoration-color: #EF9F27;
+    text-decoration-style: wavy;
+  }
+
+  .ing-parsed {
+    font-size: 11px;
+    color: #9A8F7F;
+    margin-top: 1px;
+  }
+
+  .ing-edit {
+    font-size: 16px;
+    color: #9A8F7F;
+  }
+
+  /* Uncertain ingredient edit inline */
+  .ing-edit-row {
+    background: #FAEEDA;
+    padding: 8px 14px 10px;
+    border-bottom: 0.5px solid #EDE5D8;
+  }
+
+  .ing-edit-label {
+    font-size: 10px;
+    color: #633806;
+    font-weight: 500;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+
+  .ing-edit-input {
+    display: flex;
+    gap: 8px;
+  }
+
+  .edit-field {
+    flex: 1;
+    background: #FBF8F3;
+    border: 0.5px solid #EF9F27;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 13px;
+    color: #3D2B1F;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .edit-confirm {
+    background: #C9523A;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* Bottom actions */
+  .bottom-actions {
+    margin-top: auto;
+    padding: 12px 14px 16px;
+    border-top: 0.5px solid #D4C9BA;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .accept-btn {
+    width: 100%;
+    padding: 12px;
+    background: #C9523A;
+    color: #FBF8F3;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .secondary-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  .secondary-btn {
+    flex: 1;
+    padding: 9px;
+    background: #EDE5D8;
+    color: #7A6A5A;
+    border: none;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-label">Heirloom · Wireframe 4 of 5 · Manual Correction</div>
+
+<div class="device">
+  <div class="screen">
+    <div class="status-bar">
+      <span>9:41</span>
+      <div style="display:flex;gap:4px">
+        <i class="ti ti-wifi" style="font-size:13px"></i>
+        <i class="ti ti-battery-2" style="font-size:13px"></i>
+      </div>
+    </div>
+
+    <div class="nav-bar">
+      <span class="nav-skip">Skip for now</span>
+      <span class="nav-title">Quick review</span>
+      <span class="nav-accept">Accept all</span>
+    </div>
+
+    <div class="progress-row">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar"></div>
+      </div>
+      <span class="progress-label">1 of 3 flagged</span>
+    </div>
+
+    <div class="notice">
+      <div class="notice-title">
+        <i class="ti ti-alert-triangle" style="font-size:12px"></i>
+        2 ingredients need a look
+      </div>
+      <div class="notice-body">The rest parsed cleanly. Tap any highlighted ingredient to correct it, or accept the recipe as-is.</div>
+    </div>
+
+    <div class="recipe-title">Grandma's Pecan Pie</div>
+
+    <div class="section-label">Ingredients</div>
+
+    <!-- OK ingredient -->
+    <div class="ingredient-row">
+      <div class="ing-status ing-ok">
+        <i class="ti ti-check" style="font-size:11px"></i>
+      </div>
+      <div class="ing-text">
+        <div class="ing-name">1 cup light corn syrup</div>
+        <div class="ing-parsed">Parsed cleanly</div>
+      </div>
+    </div>
+
+    <!-- OK ingredient -->
+    <div class="ingredient-row">
+      <div class="ing-status ing-ok">
+        <i class="ti ti-check" style="font-size:11px"></i>
+      </div>
+      <div class="ing-text">
+        <div class="ing-name">3 eggs, beaten</div>
+        <div class="ing-parsed">Parsed cleanly</div>
+      </div>
+    </div>
+
+    <!-- Uncertain ingredient - expanded for editing -->
+    <div class="ingredient-row">
+      <div class="ing-status ing-uncertain">
+        <i class="ti ti-question-mark" style="font-size:11px"></i>
+      </div>
+      <div class="ing-text">
+        <div class="ing-name uncertain">a good handful of pecans</div>
+        <div class="ing-parsed">Quantity unclear — tap to correct</div>
+      </div>
+      <i class="ti ti-chevron-down" style="font-size:16px;color:#EF9F27"></i>
+    </div>
+
+    <!-- Inline edit -->
+    <div class="ing-edit-row">
+      <div class="ing-edit-label">What did you mean?</div>
+      <div class="ing-edit-input">
+        <input class="edit-field" type="text" value="1½ cups pecan halves" />
+        <button class="edit-confirm">Done</button>
+      </div>
+    </div>
+
+    <!-- Second uncertain -->
+    <div class="ingredient-row">
+      <div class="ing-status ing-uncertain">
+        <i class="ti ti-question-mark" style="font-size:11px"></i>
+      </div>
+      <div class="ing-text">
+        <div class="ing-name uncertain">butter, softish</div>
+        <div class="ing-parsed">Preparation unclear</div>
+      </div>
+      <i class="ti ti-chevron-right" style="font-size:16px;color:#EF9F27"></i>
+    </div>
+
+    <!-- OK ingredient -->
+    <div class="ingredient-row">
+      <div class="ing-status ing-ok">
+        <i class="ti ti-check" style="font-size:11px"></i>
+      </div>
+      <div class="ing-text">
+        <div class="ing-name">1 tsp vanilla extract</div>
+        <div class="ing-parsed">Parsed cleanly</div>
+      </div>
+    </div>
+
+    <div class="bottom-actions">
+      <button class="accept-btn">Accept and save recipe</button>
+      <div class="secondary-row">
+        <button class="secondary-btn">Skip for now</button>
+        <button class="secondary-btn">Next flagged recipe →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:24px 0 0;max-width:320px;font-size:11px;color:#7A6A5A">
+  <div style="border-left:3px solid #C9523A;padding-left:8px;line-height:1.5">Corrections happen inline, not on a separate screen. Tap the ingredient, edit in place, tap Done. The flow never leaves the recipe.</div>
+  <div style="border-left:3px solid #EF9F27;padding-left:8px;line-height:1.5">Uncertain ingredients are underlined with a wavy amber line — a familiar signal (like spell-check) that something needs attention without alarming the user.</div>
+  <div style="border-left:3px solid #9A8F7F;padding-left:8px;line-height:1.5">"Accept all" and "Skip for now" are both always available. The correction experience must never feel mandatory — that's the core retention risk.</div>
+  <div style="border-left:3px solid #B0A090;padding-left:8px;line-height:1.5">Progress indicator shows position across flagged recipes. After accepting, the next flagged recipe loads automatically — the queue clears itself.</div>
+</div>
+
+</body>
+</html>
