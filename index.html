@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rae Wree — Product Thinking</title>
+<meta name="description" content="Product thinking portfolio — case studies in group travel coordination, recipe re-engagement, and pest control software analysis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1C1B19;
+    --ink-mid: #4A4840;
+    --ink-light: #8A8780;
+    --ink-faint: #C8C5BE;
+    --paper: #FAF8F4;
+    --paper-warm: #F2EFE8;
+    --paper-warmer: #E8E3D8;
+    --rule: rgba(28,27,25,0.12);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 80px 32px 120px;
+  }
+
+  /* ── Header ── */
+  .header {
+    margin-bottom: 64px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+  }
+
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: clamp(36px, 5vw, 54px);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+
+  .intro {
+    max-width: 580px;
+  }
+
+  .intro p {
+    font-size: 17px;
+    color: var(--ink-mid);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .intro p:last-child { margin-bottom: 0; }
+
+  .intro p.lead {
+    font-size: 19px;
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.65;
+  }
+
+  /* ── Gallery ── */
+  .gallery-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 24px;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── Project cards ── */
+  .card {
+    background: var(--paper-warm);
+    border: 0.5px solid var(--paper-warmer);
+    border-radius: 14px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: border-color .15s, transform .15s, box-shadow .15s;
+  }
+
+  .card:hover {
+    border-color: var(--ink-faint);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(28,27,25,0.08);
+  }
+
+  .card-cover {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: var(--paper-warmer);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .card-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  /* Placeholder covers for projects without screenshots yet */
+  .card-cover.placeholder-wbt {
+    background: linear-gradient(135deg, #EEEDFE 0%, #D4D0F5 100%);
+  }
+
+  .card-cover.placeholder-heirloom {
+    background: linear-gradient(135deg, #F5EDE8 0%, #E8D5CC 100%);
+  }
+
+  .card-cover.placeholder-pest {
+    background: linear-gradient(135deg, #E8F2E8 0%, #D0E8D0 100%);
+  }
+
+  .cover-emoji {
+    font-size: 48px;
+    opacity: .6;
+  }
+
+  .card-body {
+    padding: 20px 22px 22px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-title {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .card-desc {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 16px;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 400;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: var(--paper-warmer);
+    color: var(--ink-light);
+    border: 0.5px solid var(--rule);
+  }
+
+  .card-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 0.5px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-dot.complete { background: #1D9E75; }
+  .status-dot.progress { background: #EF9F27; }
+
+  /* ── Footer ── */
+  .footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .footer a {
+    color: var(--ink-light);
+    text-decoration: none;
+  }
+
+  .footer a:hover { color: var(--ink); }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .page { padding: 48px 20px 80px; }
+    .header { margin-bottom: 48px; }
+    .gallery { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-eyebrow">Product Thinking</div>
+    <h1>Rae Wree</h1>
+    <div class="intro">
+      <p class="lead">I'm obsessed by the messy space where real-world work meets software systems.</p>
+      <p>Over the course of my career, I've worked as both a developer and inside operational environments that depend heavily on software tools. That experience has made me especially attentive to workflow gaps, hidden system assumptions, and the small design decisions that shape how people actually work.</p>
+      <p>These case studies are working documents — the thinking is visible, including where it changed.</p>
+    </div>
+  </header>
+
+  <!-- Gallery -->
+  <div class="gallery-label">Case Studies</div>
+  <div class="gallery">
+
+    <!-- Who Booked This? -->
+    <a class="card" href="who-booked-this/index.html">
+      <div class="card-cover placeholder-wbt">
+        <!-- Replace with: <img src="who-booked-this/cover.png" alt="Who Booked This? itinerary day view"> -->
+        <span class="cover-emoji">🗺</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Who Booked This?</div>
+        <div class="card-desc">A mobile app for extended family trips — built around the insight that group plans fall apart not from lack of enthusiasm, but from lack of a shared record of what was actually decided.</div>
+        <div class="card-tags">
+          <span class="tag">0→1</span>
+          <span class="tag">Consumer</span>
+          <span class="tag">Mobile</span>
+        </div>
+        <div class="card-status">
+          <div class="status-dot complete"></div>
+          Complete
+        </div>
+      </div>
+    </a>
+
+    <!-- Heirloom -->
+    <a class="card" href="heirloom/index.html">
+      <div class="card-cover placeholder-heirloom">
+        <!-- Replace with: <img src="heirloom/cover.png" alt="Heirloom home screen"> -->
+        <span class="cover-emoji">🍽</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Heirloom</div>
+        <div class="card-desc">A mobile app that rescues stranded recipes and surfaces them when you're ready to cook.</div>
+        <div class="card-tags">
+          <span class="tag">0→1</span>
+          <span class="tag">Consumer</span>
+          <span class="tag">Mobile</span>
+        </div>
+        <div class="card-status">
+          <div class="status-dot complete"></div>
+          Complete
+        </div>
+      </div>
+    </a>
+
+    <!-- Pest Control -->
+    <a class="card" href="pest-control/index.html">
+      <div class="card-cover placeholder-pest">
+        <!-- Replace with: <img src="pest-control/cover.png" alt="Pest control analysis"> -->
+        <span class="cover-emoji">🌿</span>
+      </div>
+      <div class="card-body">
+        <div class="card-title">Pest Control Software: Three Gaps</div>
+        <div class="card-desc">Three analyses of how commercial pest control software mishandles information — who has it, when they get it, and where it lives.</div>
+        <div class="card-tags">
+          <span class="tag">Analysis</span>
+          <span class="tag">B2B</span>
+          <span class="tag">Workflow</span>
+        </div>
+        <div class="card-status">
+          <div class="status-dot progress"></div>
+          In progress
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span>Rae Wree</span>
+    <span>May 2026</span>
+  </footer>
+
+</div>
+</body>
+</html>
